@@ -15,3 +15,4 @@ TODO:
 * clear meaning of alpha and/or h
 * don't die if bad alpha
 * translate comments
+* normal font choice

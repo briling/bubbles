@@ -16,13 +16,13 @@ class Bubble_World:
     def print_tail(self):
       print("</svg>");
 
-    def print_def(self, grad_offset=30.0):
+    def print_def(self, grad_offset=30.0, font_family='LMsans', font_weight='normal'):
       print('  <defs>');
       self.print_def_bubble()
       print()
-      self.print_def_gradient(grad_offset)
+      self.print_def_gradient(offset=grad_offset)
       print()
-      self.print_def_font()
+      self.print_def_font(family=font_family,weight=font_weight)
       print('  </defs>');
       print()
 
@@ -44,19 +44,32 @@ class Bubble_World:
         <stop offset="%d%%" stop-color="#%06x" />\
         </linearGradient>'%(i, j, offset, bubi['stroke'], 100-offset, bubj['stroke']))
 
-    def print_def_font(self):
-      print('''    <style>\n\
-          .mytext {\n\
-            font-style:normal; font-variant:normal; font-weight:bold; font-stretch:normal;\n\
-            line-height:125%;\n\
-            font-family:"Adobe Helvetica"; -inkscape-font-specification:"Adobe Helvetica, Normal";\n\
-            font-variant-ligatures:normal; font-variant-caps:normal; font-variant-numeric:normal; font-feature-settings:normal;\n\
-            text-align:start; letter-spacing:0px; word-spacing:0px; writing-mode:lr-tb; text-anchor:middle;\n\
-            fill-opacity:1; stroke:#FFFFFF;\n\
-            stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;\n\
-            stroke-miterlimit:4; stroke-dasharray:none\n\
-          }\n\
-        </style>\n\n''' )
+    def print_def_font(self, family='LMsans', weight='normal'):
+      if family=='Helvetica':
+        print(f'''    <style>
+            .mytext {'{'}
+              font-style:normal; font-variant:normal; font-weight:{weight}; font-stretch:normal;
+              line-height:125%;
+              font-family:"Adobe Helvetica"; -inkscape-font-specification:"Adobe Helvetica, Normal";
+              font-variant-ligatures:normal; font-variant-caps:normal; font-variant-numeric:normal; font-feature-settings:normal;
+              text-align:start; letter-spacing:0px; word-spacing:0px; writing-mode:lr-tb; text-anchor:middle;
+              fill-opacity:1; stroke:#FFFFFF;
+              stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
+              stroke-miterlimit:4; stroke-dasharray:none
+            {'}'}
+          </style>''' )
+      if family=='LMsans':
+        print(f'''    <style>
+        .mytext {'{'}
+          line-height:125%;
+          font-style:normal;font-variant:normal;font-weight:{weight};font-stretch:normal;
+          font-family:"Latin Modern Sans";-inkscape-font-specification:"Latin Modern Sans";
+          text-align:center;text-anchor:middle;
+          fill-opacity:1; stroke:#FFFFFF;
+          stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
+          stroke-miterlimit:4; stroke-dasharray:none
+        {'}'}
+          </style>''' )
 
 
     def put_bubble(self, t, x, y):

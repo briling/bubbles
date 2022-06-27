@@ -15,19 +15,16 @@
     <linearGradient id="myGradient2.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
 
     <style>
-          .mytext {
-            font-style:normal; font-variant:normal; font-weight:bold; font-stretch:normal;
-            line-height:125%;
-            font-family:"Adobe Helvetica"; -inkscape-font-specification:"Adobe Helvetica, Normal";
-            font-variant-ligatures:normal; font-variant-caps:normal; font-variant-numeric:normal; font-feature-settings:normal;
-            text-align:start; letter-spacing:0px; word-spacing:0px; writing-mode:lr-tb; text-anchor:middle;
-            fill-opacity:1; stroke:#FFFFFF;
-            stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
-            stroke-miterlimit:4; stroke-dasharray:none
-          }
-        </style>
-
-
+        .mytext {
+          line-height:125%;
+          font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;
+          font-family:"Latin Modern Sans";-inkscape-font-specification:"Latin Modern Sans";
+          text-align:center;text-anchor:middle;
+          fill-opacity:1; stroke:#FFFFFF;
+          stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
+          stroke-miterlimit:4; stroke-dasharray:none
+        }
+          </style>
   </defs>
 
 
@@ -48,7 +45,7 @@
     <tspan x="50" dy="1em"> abc </tspan>
     <tspan x="50" dy="1em"> ,./ </tspan>
   </text>
-  <text x="50" y="200" class="mytext" font-size="6px" fill="#000000">
+  <text x="50" y="200" class="mytext" font-size="8px" fill="#000000">
     <tspan x="50" dy="-0.75em"> 123 </tspan>
     <tspan x="50" dy="1em"> abc </tspan>
     <tspan x="50" dy="1em"> ,./ </tspan>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500">
+  <circle cx="350" cy="50" r="40" stroke="black" stroke-width="1" fill="white" />
+  <circle cx="350" cy="150" r="40" stroke="black" stroke-width="1" fill="white" />
+  <line x1="350" y1="50" x2="350" y2="150" style="stroke:rgb(255,0,0);stroke-width:1" />
+  <circle cx="402.5" cy="100.0" r="32.5" stroke="black" stroke-width="1" fill="white" />
+  <circle cx="297.5" cy="100.0" r="32.5" stroke="black" stroke-width="1" fill="white" />
+  <circle cx="378.9655172413793" cy="77.58620689655172" r="1" stroke="green" stroke-width="1" fill="white" />
+  <circle cx="321.0344827586207" cy="77.58620689655172" r="1" stroke="green" stroke-width="1" fill="white" />
+  <circle cx="378.9655172413793" cy="122.41379310344828" r="1" stroke="green" stroke-width="1" fill="white" />
+  <circle cx="321.0344827586207" cy="122.41379310344828" r="1" stroke="green" stroke-width="1" fill="white" />
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="1" fill="white" />
+  <circle cx="50" cy="150" r="20" stroke="black" stroke-width="1" fill="white" />
+  <line x1="50" y1="50" x2="50" y2="150" style="stroke:rgb(255,0,0);stroke-width:1" />
+  <circle cx="50" cy="250.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="69.59591794226543" cy="154.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="30.404082057734573" cy="154.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="89.19183588453086" cy="58.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="10.808164115469147" cy="58.0" r="1" stroke="red" stroke-width="1" fill="white" />
+11.53695903281549
+  <line x1="50" y1="250.0" x2="96.93033951206928" y2="-46.306502178541336" style="stroke:rgb(0,0,255);stroke-width:1" />
+  <line x1="50" y1="250.0" x2="3.069660487930726" y2="-46.306502178541336" style="stroke:rgb(0,0,255);stroke-width:1" />
+  <circle cx="36.498518191128255" cy="164.7549987788785" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="63.501481808871745" cy="164.7549987788785" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="32.59978237137699" cy="140.1393495916061" r="1" stroke="green" stroke-width="1" fill="white" />
+  <circle cx="67.40021762862301" cy="140.1393495916061" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="22.99703638225651" cy="79.509997557757" r="1" stroke="green" stroke-width="1" fill="white" />
+  <circle cx="77.00296361774349" cy="79.509997557757" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="15.199564742753985" cy="30.278699183212268" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="84.80043525724602" cy="30.278699183212268" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="-10.25766623968157" cy="115.85216381214886" r="49.260819060744346" stroke="green" stroke-width="1" fill="white" />
+
+    <g id="liason0" transform="translate(0,0)">
+      <path d=" 
+      M 32.59978237137699 140.1393495916061 
+      A 49.260819060744346,  49.260819060744346  0 0 0 22.99703638225651 79.509997557757 
+      A 40, 40 0 0 0 77.00296361774349 79.509997557757 
+      A 49.260819060744346,  49.260819060744346  0 0 0 67.40021762862301 140.1393495916061 
+      A 20, 20 0 0 0 32.59978237137699 140.1393495916061 
+      " />
+    </g>
+</svg>
+

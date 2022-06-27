@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500">
+  <defs>
+    <g id="bubble0"> <circle cx="0" cy="0" r="50.000000" fill="#ffaaff" stroke="#990000" stroke-width="20.000000"/></g>
+    <g id="bubble1"> <circle cx="0" cy="0" r="70.000000" fill="#aaffff" stroke="#000099" stroke-width="20.000000"/></g>
+    <g id="bubble2"> <circle cx="0" cy="0" r="45.000000" fill="#ffaaff" stroke="#990099" stroke-width="10.000000"/></g>
+
+    <linearGradient id="myGradient0.0" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#990000" /><stop offset="70%" stop-color="#990000" /></linearGradient>
+    <linearGradient id="myGradient0.1" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#990000" /><stop offset="70%" stop-color="#000099" /></linearGradient>
+    <linearGradient id="myGradient0.2" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#990000" /><stop offset="70%" stop-color="#990099" /></linearGradient>
+    <linearGradient id="myGradient1.0" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#000099" /><stop offset="70%" stop-color="#990000" /></linearGradient>
+    <linearGradient id="myGradient1.1" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#000099" /><stop offset="70%" stop-color="#000099" /></linearGradient>
+    <linearGradient id="myGradient1.2" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#000099" /><stop offset="70%" stop-color="#990099" /></linearGradient>
+    <linearGradient id="myGradient2.0" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#990099" /><stop offset="70%" stop-color="#990000" /></linearGradient>
+    <linearGradient id="myGradient2.1" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#990099" /><stop offset="70%" stop-color="#000099" /></linearGradient>
+    <linearGradient id="myGradient2.2" gradientTransform="rotate(90)"><stop offset="30%" stop-color="#990099" /><stop offset="70%" stop-color="#990099" /></linearGradient>
+
+    <style>
+      .mytext {
+        font-style:normal; font-variant:normal; font-weight:bold; font-stretch:normal;
+        line-height:125%;
+        font-family:"Adobe Helvetica"; -inkscape-font-specification:"Adobe Helvetica, Normal";
+        font-variant-ligatures:normal; font-variant-caps:normal; font-variant-numeric:normal; font-feature-settings:normal;
+        text-align:start; letter-spacing:0px; word-spacing:0px; writing-mode:lr-tb; text-anchor:middle;
+        fill-opacity:1; stroke:#FFFFFF;
+        stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
+        stroke-miterlimit:4; stroke-dasharray:none
+      }
+    </style>
+
+
+  </defs>
+
+
+          <g transform="rotate(-0.0,50,100)">
+            <path d=" 
+            M 23.706645434460352 257.471662321567 
+            A 60.76358260475697,  60.76358260475697  0 0 0 21.060684810174603 152.55964265806938  
+            h 57.878630379650794 
+            A 60.76358260475697,  60.76358260475697  0 0 0 76.29335456553964 257.471662321567  
+            z" 
+            fill="url('#myGradient0.2')" 
+            />
+          </g>
+  <use x="50.000000" y="100.000000" xlink:href="#bubble0" />
+  <use x="50.000000" y="300.000000" xlink:href="#bubble2" />
+
+          <g transform="rotate(90.0,250,250)">
+            <path d=" 
+            M 230.14751045113172 354.11014645139846 
+            A 25.84501471406118,  25.84501471406118  0 0 0 228.95212854989893 306.18707242257835  
+            h 42.09574290020211 
+            A 25.84501471406118,  25.84501471406118  0 0 0 269.8524895488683 354.11014645139846  
+            z" 
+            fill="url('#myGradient0.2')" 
+            />
+          </g>
+  <use x="250.000000" y="250.000000" xlink:href="#bubble0" />
+  <use x="100.000000" y="250.000000" xlink:href="#bubble2" />
+
+          <g transform="rotate(-180.0,400,250)">
+            <path d=" 
+            M 380.1475104511317 354.11014645139846 
+            A 25.845014714060873,  25.845014714060873  0 0 0 378.95212854989893 306.18707242257835  
+            h 42.09574290020211 
+            A 25.845014714060873,  25.845014714060873  0 0 0 419.8524895488683 354.11014645139846  
+            z" 
+            fill="url('#myGradient0.2')" 
+            />
+          </g>
+  <use x="400.000000" y="250.000000" xlink:href="#bubble0" />
+  <use x="400.000000" y="100.000000" xlink:href="#bubble2" />
+
+          <g transform="rotate(18.43494882292202,500,100)">
+            <path d=" 
+            M 458.91267795611026 387.73510086839565 
+            A 212.6135510462623,  212.6135510462623  0 0 0 452.5038098648462 136.66213199808044  
+            h 94.99238027030769 
+            A 212.6135510462623,  212.6135510462623  0 0 0 541.0873220438898 387.73510086839565  
+            z" 
+            fill="url('#myGradient0.2')" 
+            />
+          </g>
+  <use x="500.000000" y="100.000000" xlink:href="#bubble0" />
+  <use x="400.000000" y="400.000000" xlink:href="#bubble2" />
+</svg>
+

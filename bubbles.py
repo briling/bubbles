@@ -1,9 +1,4 @@
-#!/usr/bin/env python3
-
 import math
-
-
-
 
 class Bubble_World:
     def __init__(self):
@@ -160,93 +155,9 @@ class Bubble_World:
 
     def put_text(self, x,y, text, fs=12, fc=0x000000):
       print(f'  <text x="{x}" y="{y}" class="mytext" font-size="{fs}px" fill="#{fc:06x}">')
-      l = (len(text)-1)/2
+      l = (len(text)-1.5)/2
       print(f'    <tspan x="{x}" dy="-{l}em">', text[0], '</tspan>')
       for line in text[1:]:
         print(f'    <tspan x="{x}" dy="1em">', line, '</tspan>')
       print('  </text>')
 
-
-
-
-################################################################
-
-xcanv = 500
-ycanv = 500
-
-bubble_world = Bubble_World()
-
-bubble_world.def_bubble(0, fill=0xFFAAFF, r=25, stroke=0x990000, stroke_w=10)
-bubble_world.def_bubble(1, fill=0xAAFFFF, r=25, stroke=0x000099, stroke_w=10)
-bubble_world.def_bubble(2, fill=0xFFAAFF, r=25, stroke=0x990099, stroke_w=5)
-
-
-bubble_world.print_head(xcanv, ycanv)
-bubble_world.print_def()
-
-
-
-
-b0 = (0 , 50, 100)
-b1 = (2 , 50, 200)
-bubble_world.put_liaison(*b0, *b1)
-bubble_world.put_bubble(*b0)
-bubble_world.put_bubble(*b1)
-
-b0 = ( 0   , 250  , 250  )
-b1 = ( 2   , 150, 250)
-bubble_world.put_liaison(*b1, *b0)
-bubble_world.put_bubble(*b0)
-bubble_world.put_bubble(*b1)
-
-b0 = (0   , 400 , 250 )
-b1 = (2   , 400  , 150  )
-bubble_world.put_liaison(*b0, *b1)
-bubble_world.put_bubble(*b0)
-bubble_world.put_bubble(*b1)
-
-b0 = (2   , 300 , 200 )
-b1 = (0   , 200  , 150  )
-bubble_world.put_liaison(*b0, *b1)
-bubble_world.put_bubble(*b0)
-bubble_world.put_bubble(*b1)
-
-
-
-
-b0 = (0 , 50, 300)
-b1 = (1 , 50, 400)
-bubble_world.put_liaison(*b0, *b1)
-bubble_world.put_bubble(*b0)
-bubble_world.put_bubble(*b1)
-
-b0 = ( 0   , 250  , 450  )
-b1 = ( 1   , 150, 450)
-bubble_world.put_liaison(*b1, *b0)
-bubble_world.put_bubble(*b0)
-bubble_world.put_bubble(*b1)
-
-b0 = (0   , 400 , 450 )
-b1 = (1   , 400  , 350  )
-bubble_world.put_liaison(*b0, *b1)
-bubble_world.put_bubble(*b0)
-bubble_world.put_bubble(*b1)
-
-b0 = (1   , 300 , 400 )
-b1 = (0   , 200  , 350  )
-bubble_world.put_liaison(*b0, *b1)
-bubble_world.put_bubble(*b0)
-bubble_world.put_bubble(*b1)
-
-
-
-
-
-
-
-
-
-
-
-
-bubble_world.print_tail()

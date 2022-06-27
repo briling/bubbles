@@ -11,6 +11,7 @@ and now you can!
 
 
 TODO:
+* fstrings everywhere
 * clear meaning of alpha and/or h
 * don't die if bad alpha
 * translate comments

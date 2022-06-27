@@ -66,6 +66,12 @@
           </g>
   <use x="250" y="250" xlink:href="#bubble0" />
   <use x="150" y="250" xlink:href="#bubble2" />
+  <text x="250" y="250" class="mytext" font-size="12px" fill="#000000">
+    <tspan x="250" dy="0.25em"> 123 </tspan>
+  </text>
+  <text x="150" y="250" class="mytext" font-size="6px" fill="#000000">
+    <tspan x="150" dy="0.25em"> 123 </tspan>
+  </text>
 
           <g transform="rotate(-180.0,400,250)">
             <path d=" 

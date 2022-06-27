@@ -26,6 +26,8 @@ b1 = ( 2   , 150, 250)
 bubble_world.put_liaison(*b1, *b0, alpha=1.3)
 bubble_world.put_bubble(*b0)
 bubble_world.put_bubble(*b1)
+bubble_world.put_text(*b0[1:], ['123'])
+bubble_world.put_text(*b1[1:], ['123'], fs=6)
 
 b0 = (0   , 400 , 250 )
 b1 = (2   , 400  , 150  )

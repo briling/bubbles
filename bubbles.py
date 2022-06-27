@@ -156,7 +156,7 @@ class Bubble_World:
     def put_text(self, x,y, text, fs=12, fc=0x000000):
       print(f'  <text x="{x}" y="{y}" class="mytext" font-size="{fs}px" fill="#{fc:06x}">')
       l = (len(text)-1.5)/2
-      print(f'    <tspan x="{x}" dy="-{l}em">', text[0], '</tspan>')
+      print(f'    <tspan x="{x}" dy="{-l}em">', text[0], '</tspan>')
       for line in text[1:]:
         print(f'    <tspan x="{x}" dy="1em">', line, '</tspan>')
       print('  </text>')

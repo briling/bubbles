@@ -39,7 +39,7 @@ class Bubble_World:
           for j in self.bubble.keys():
               bubi = self.bubble[i]
               bubj = self.bubble[j]
-              print('    <linearGradient id="myGradient%d.%d" gradientTransform="rotate(90)">\
+              print('    <linearGradient id="myGradient%d.%d" x1="0" x2="0" y1="0" y2="1">\
         <stop offset="%d%%" stop-color="#%06x" />\
         <stop offset="%d%%" stop-color="#%06x" />\
         </linearGradient>'%(i, j, offset, bubi['stroke'], 100-offset, bubj['stroke']))

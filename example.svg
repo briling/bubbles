@@ -4,15 +4,15 @@
     <g id="bubble1"> <circle cx="0" cy="0" r="25.000000" fill="#aaffff" stroke="#000099" stroke-width="10.000000"/></g>
     <g id="bubble2"> <circle cx="0" cy="0" r="25.000000" fill="#ffaaff" stroke="#990099" stroke-width="5.000000"/></g>
 
-    <linearGradient id="myGradient0.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
-    <linearGradient id="myGradient0.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
-    <linearGradient id="myGradient0.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
-    <linearGradient id="myGradient1.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
-    <linearGradient id="myGradient1.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
-    <linearGradient id="myGradient1.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
-    <linearGradient id="myGradient2.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
-    <linearGradient id="myGradient2.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
-    <linearGradient id="myGradient2.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
+    <linearGradient id="myGradient0.0" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
+    <linearGradient id="myGradient0.1" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
+    <linearGradient id="myGradient0.2" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
+    <linearGradient id="myGradient1.0" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
+    <linearGradient id="myGradient1.1" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
+    <linearGradient id="myGradient1.2" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
+    <linearGradient id="myGradient2.0" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
+    <linearGradient id="myGradient2.1" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
+    <linearGradient id="myGradient2.2" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
 
     <style>
         .mytext {

@@ -23,7 +23,7 @@ bubble_world.put_text(*b1[1:], ['123', 'abc', ',./'], fs=6)
 
 b0 = ( 0   , 250  , 250  )
 b1 = ( 2   , 150, 250)
-bubble_world.put_liaison(*b1, *b0)
+bubble_world.put_liaison(*b1, *b0, alpha=1.3)
 bubble_world.put_bubble(*b0)
 bubble_world.put_bubble(*b1)
 
@@ -35,7 +35,7 @@ bubble_world.put_bubble(*b1)
 
 b0 = (2   , 300 , 200 )
 b1 = (0   , 200  , 150  )
-bubble_world.put_liaison(*b0, *b1)
+bubble_world.put_liaison(*b0, *b1, alpha=0.8)
 bubble_world.put_bubble(*b0)
 bubble_world.put_bubble(*b1)
 
@@ -56,13 +56,13 @@ bubble_world.put_bubble(*b1)
 
 b0 = (0   , 400 , 450 )
 b1 = (1   , 400  , 350  )
-bubble_world.put_liaison(*b0, *b1)
+bubble_world.put_liaison(*b0, *b1, h=4)
 bubble_world.put_bubble(*b0)
 bubble_world.put_bubble(*b1)
 
 b0 = (1   , 300 , 400 )
 b1 = (0   , 200  , 350  )
-bubble_world.put_liaison(*b0, *b1)
+bubble_world.put_liaison(*b0, *b1, h=32)
 bubble_world.put_bubble(*b0)
 bubble_world.put_bubble(*b1)
 

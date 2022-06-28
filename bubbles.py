@@ -76,13 +76,13 @@ class Bubble_World:
       print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />');
 
 
-    def put_liaison(self, t0, x0, y0, t1, x1, y1_, alpha=None, h=None):
+    def put_liaison(self, t0, x0, y0, t1, x1, y1_, alpha=None, h=None, auto=False):
 
         r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
         r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
 
         if r0 < r1:
-           self.put_liaison(t1, x1, y1_, t0, x0, y0, alpha, h)
+           self.put_liaison(t1, x1, y1_, t0, x0, y0, alpha, h, auto)
            return
 
         angle = math.pi/2 - math.atan2(y1_-y0,x1-x0)
@@ -90,16 +90,16 @@ class Bubble_World:
         x = x0
         y1 = y0+l
 
+        if h is None:
+            h = 0.666*r1
         if abs(r0-r1)>1e-4:
-            self.put_liaison_diffr(x,y0,y1,t0,t1,alpha,angle)
+            self.put_liaison_diffr(x,y0,y1,t0,t1,alpha,h,angle, auto)
         else:
             self.put_liaison_equal(x,y0,y1,t0,t1,h, angle)
 
     def put_liaison_equal(self, x,y0,y1,t0,t1,h,angle):
 
       r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
-      if h is None:
-          h = 0.666*r0
 
       l = abs(y1-y0)
       R = (0.25*l**2+0.25*h**2-r0**2) / (2*r0-h)
@@ -123,37 +123,56 @@ class Bubble_World:
       </g>')
 
 
-    def put_liaison_diffr(self, x,y0,y1,t0,t1,alpha,angle):
-      def cross2lines(x_1, y_1, x_2, y_2, x_3, y_3, x_4, y_4):
-          x = ((x_1*y_2-y_1* x_2)*(x_3-x_4)-(x_1-x_2)*(x_3 *y_4-y_3* x_4)) / ((x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4))
-          y = ((x_1*y_2-y_1* x_2)*(y_3-y_4)-(y_1-y_2)*(x_3 *y_4-y_3* x_4)) / ((x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4))
-          return x,y
+    def put_liaison_diffr(self, x,y0,y1,t0,t1,alpha,h,angle, auto=False):
+      #def cross2lines(x_1, y_1, x_2, y_2, x_3, y_3, x_4, y_4):
+      #    x = ((x_1*y_2-y_1* x_2)*(x_3-x_4)-(x_1-x_2)*(x_3 *y_4-y_3* x_4)) / ((x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4))
+      #    y = ((x_1*y_2-y_1* x_2)*(y_3-y_4)-(y_1-y_2)*(x_3 *y_4-y_3* x_4)) / ((x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4))
+      #    return x,y
+      def PX(x, y0, y1, l, EO1, C, D, X11, X12, cosa, sina):
+          px = x                            - cosa*l*C / ( EO1 * math.sqrt(D) )
+          py = (X11*y0-X12*y1)/math.sqrt(D) - sina*l*C / ( EO1 * math.sqrt(D) )
+          return px, py
+
+      def get_coord(alpha):
+        sina = math.sin((90-alpha)/180*math.pi) # угол между секущей и прямой соединяющей центры
+        cosa = math.cos((90-alpha)/180*math.pi)
+        # пересечение секущих с окружностями
+        B = 2 * EO1 * sina
+        C = EO1**2-r1**2
+        D = B*B-4*C
+        X11 = (-B +math.sqrt(D))*0.5
+        X12 = (-B -math.sqrt(D))*0.5
+        X21 = X11 * r0/r1
+        # px, py = cross2lines(x,y0,Cx+X21*cosa,Cy+X21*sina, x, y1, Cx+X12*cosa,  Cy+X12*sina) # центр касательной окружности
+        # print('X', px, '\t', py)
+        px, py = PX(x, y0, y1, l, EO1, C, D, X11, X12, cosa, sina)
+        # print('X', px, '\t', py)
+        R = math.sqrt((px-(Cx+X21*cosa))**2 + (py-(Cy+X21*sina))**2) # радиус касательной окружности
+        h = 2*(x-px-R)
+        return sina, cosa, X12, X21, R, h
+
+
       r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
       r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
       l = abs(y1-y0)
-      # круги разного размера
-      # малый круг снизу
       EO1 = r1*l / (r0-r1)
       EO0 = EO1+l
       Cx = x
       Cy = y1+EO1
       cosb = r1/EO1
-      if alpha is None:
-          alpha = 0.666*math.acos(cosb)
-      #print(math.asin(cosb)/math.pi*180) # угол между касательной и прямой соединяющей центры
-      # больше него нельзя
-      sina = math.sin((90-alpha)/180*math.pi) # угол между секущей и прямой соединяющей центры
-      cosa = math.cos((90-alpha)/180*math.pi)
-      # пересечение секущих с окружностями
-      B = 2 * EO1 * sina
-      C = EO1**2-r1**2
-      D = B*B-4*C
 
-      X11 = (-B +math.sqrt(D))*0.5
-      X12 = (-B -math.sqrt(D))*0.5
-      X21 = X11 * r0/r1
-      px, py = cross2lines(x,y0,Cx+X21*cosa,Cy+X21*sina, x, y1, Cx+X12*cosa,  Cy+X12*sina) # центр касательной окружности
-      R = math.sqrt((px-(Cx+X21*cosa))**2 + (py-(Cy+X21*sina))**2) # радиус касательной окружности
+      alpha_max = math.asin(cosb)/math.pi*180
+      if alpha is None:
+          alpha = 0.5*alpha_max
+
+      if auto==False:
+          sina, cosa, X12, X21, R, hh = get_coord(alpha)
+      else:
+          from scipy import optimize
+          alpha = optimize.fsolve(lambda x: get_coord(x)[-1]-h, alpha) #, method=None, jac=None, hess=None, hessp=None, bounds=None, constraints=(), tol=None, callback=None, options=None)
+          sina, cosa, X12, X21, R, hh = get_coord(alpha)
+
+
       print(f'\n\
           <g transform="rotate({-angle/math.pi*180},{x},{y0})">\n\
             <path d=" \n\

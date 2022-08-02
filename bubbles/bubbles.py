@@ -3,11 +3,25 @@ import math
 class Bubble_World:
     def __init__(self):
         self.bubble = {}
+        self._bubbles  = []
+        self._liaisons = []
+        self._texts    = []
+        self._colors   = []
+        self._colorsid = []
+        self._pairs    = []
+
     def def_bubble(self, key, fill=0xFFFFFF, r=50, stroke=0x990000, stroke_w=10):
-        self.bubble[key] = {'fill'    :fill,
+
+        def findcolor(c):
+            if not c in self._colors:
+               self._colors.append(c)
+            return self._colors.index(c)
+
+        self.bubble[key] = {'fill'    :findcolor(fill),
                             'r'       :r,
-                            'stroke'  :stroke,
-                            'stroke_w':stroke_w}
+                            'stroke'  :findcolor(stroke),
+                            'stroke_w':stroke_w,
+                            'used'    :False}
 
     def print_head(self, xcanv, ycanv):
       print('<svg xmlns="http://www.w3.org/2000/svg" '
@@ -18,31 +32,32 @@ class Bubble_World:
 
     def print_def(self, grad_offset=30.0, font_family='LMsans', font_weight='normal'):
       print('  <defs>');
-      self.print_def_bubble()
-      print()
       self.print_def_gradient(offset=grad_offset)
       print()
       self.print_def_font(family=font_family,weight=font_weight)
       print('  </defs>');
       print()
+      self.print_def_bubble()
+      print()
 
     def print_def_bubble(self):
       for key in self.bubble.keys():
         bub = self.bubble[key]
-        print('    <g id="bubble'+str(key)+'"> '
+        if bub['used'] is False: continue
+        print('<symbol id="bubble'+str(key)+'">'
               '<circle cx="0" cy="0" r="%lf" '
               'fill="#%06x" stroke="#%06x" stroke-width="%lf"/>'
-              '</g>' % (bub['r'], bub['fill'], bub['stroke'], bub['stroke_w']))
+              '</symbol>' % (bub['r'], self._colors[bub['fill']], self._colors[bub['stroke']], bub['stroke_w']))
 
     def print_def_gradient(self, offset=30.0):
-      for i in self.bubble.keys():
-          for j in self.bubble.keys():
+        for ii,jj in set(self._pairs):
+           for i,j in ((ii,jj), (jj,ii)):
               bubi = self.bubble[i]
               bubj = self.bubble[j]
               print('    <linearGradient id="myGradient%d.%d" x1="0" x2="0" y1="0" y2="1">\
         <stop offset="%d%%" stop-color="#%06x" />\
         <stop offset="%d%%" stop-color="#%06x" />\
-        </linearGradient>'%(i, j, offset, bubi['stroke'], 100-offset, bubj['stroke']))
+        </linearGradient>'%(i, j, offset, self._colors[bubi['stroke']], 100-offset, self._colors[bubj['stroke']]))
 
     def print_def_font(self, family='LMsans', weight='normal'):
       if family=='Helvetica':
@@ -192,4 +207,40 @@ class Bubble_World:
       for line in text[1:]:
         print(f'    <tspan x="{x}" dy="1em">', line, '</tspan>')
       print('  </text>')
+
+    def add_liaison(self, *args, **kwargs):
+      self._pairs.append((args[0], args[3]))
+      self._liaisons.append((args, kwargs))
+
+    def add_bubble(self, *args):
+      self.bubble[args[0]]['used'] = True
+      self._bubbles.append(args)
+
+    def add_text(self, *args, **kwargs):
+      self._texts.append((args, kwargs))
+
+    def put_all_liaisons(self):
+      for [a,k] in self._liaisons:
+          self.put_liaison(*a, **k)
+
+    def put_all_bubbles(self):
+      for a in self._bubbles:
+          self.put_bubble(*a)
+
+    def put_all_texts(self):
+      for [a,k] in self._texts:
+          self.put_text(*a, **k)
+
+    def dump(self, xcanv, ycanv):
+        self.print_head(xcanv, ycanv)
+        self.print_def()
+        self.put_all_liaisons()
+        self.put_all_bubbles()
+        self.put_all_texts()
+        self.print_tail()
+        #print([hex(x) for x in self._colors])
+        #print(self._colorsid)
+
+
+
 

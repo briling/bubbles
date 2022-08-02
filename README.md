@@ -12,6 +12,5 @@ and now you can!
 
 TODO:
 * readme
-* fstrings everywhere
 * translate comments
 * normal font choice

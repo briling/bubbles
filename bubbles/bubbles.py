@@ -14,7 +14,7 @@ class Bubble_World:
 
         def findcolor(c):
             if not c in self._colors:
-               self._colors.append(c)
+                self._colors.append(c)
             return self._colors.index(c)
 
         self.bubble[key] = {'fill'    :findcolor(fill),
@@ -24,11 +24,12 @@ class Bubble_World:
                             'used'    :False}
 
     def print_head(self, xcanv, ycanv):
-      print('<svg xmlns="http://www.w3.org/2000/svg" '
-            'xmlns:xlink="http://www.w3.org/1999/xlink" '
-            'width="%d" height="%d">' % (xcanv, ycanv))
+        print(f'''<svg xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="{xcanv}" height="{ycanv}">
+''')
     def print_tail(self):
-      print("</svg>");
+      print('</svg>');
 
     def print_def(self, grad_offset=30.0, font_family='LMsans', font_weight='normal'):
       print('  <defs>');
@@ -43,35 +44,37 @@ class Bubble_World:
     def print_def_bubble(self):
       for key in self.bubble.keys():
         bub = self.bubble[key]
+        cf = self._colors[bub['fill']]
+        cs = self._colors[bub['stroke']]
         if bub['used'] is False: continue
-        print('<symbol id="bubble'+str(key)+'">'
-              '<circle cx="0" cy="0" r="%lf" '
-              'fill="#%06x" stroke="#%06x" stroke-width="%lf"/>'
-              '</symbol>' % (bub['r'], self._colors[bub['fill']], self._colors[bub['stroke']], bub['stroke_w']))
+        print(f"  <symbol id='bubble{str(key)}'> "\
+              f"<circle cx='0' cy='0' r='{bub['r']}' "\
+              f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/> "\
+              '</symbol>')
 
     def print_def_gradient(self, offset=30.0):
         for i,j in set(self._pairs):
             coli = self._colors[i]
             colj = self._colors[j]
-            print('    <linearGradient id="myGradient%d.%d" x1="0" x2="0" y1="0" y2="1">\
-        <stop offset="%d%%" stop-color="#%06x" />\
-        <stop offset="%d%%" stop-color="#%06x" />\
-        </linearGradient>'%(i, j, offset, coli, 100-offset, colj))
+            print(f'    <linearGradient id="myGradient{i}.{j}" x1="0" x2="0" y1="0" y2="1">'\
+                  f'<stop offset="{offset}%"     stop-color="#{coli:06x}"/> '\
+                  f'<stop offset="{100-offset}%" stop-color="#{colj:06x}"/> '\
+                  f'</linearGradient>')
 
     def print_def_font(self, family='LMsans', weight='normal'):
       if family=='Helvetica':
         print(f'''    <style>
-            .mytext {'{'}
-              font-style:normal; font-variant:normal; font-weight:{weight}; font-stretch:normal;
-              line-height:125%;
-              font-family:"Adobe Helvetica"; -inkscape-font-specification:"Adobe Helvetica, Normal";
-              font-variant-ligatures:normal; font-variant-caps:normal; font-variant-numeric:normal; font-feature-settings:normal;
-              text-align:start; letter-spacing:0px; word-spacing:0px; writing-mode:lr-tb; text-anchor:middle;
-              fill-opacity:1; stroke:#FFFFFF;
-              stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
-              stroke-miterlimit:4; stroke-dasharray:none
-            {'}'}
-          </style>''' )
+        .mytext {'{'}
+          font-style:normal; font-variant:normal; font-weight:{weight}; font-stretch:normal;
+          line-height:125%;
+          font-family:"Adobe Helvetica"; -inkscape-font-specification:"Adobe Helvetica, Normal";
+          font-variant-ligatures:normal; font-variant-caps:normal; font-variant-numeric:normal; font-feature-settings:normal;
+          text-align:start; letter-spacing:0px; word-spacing:0px; writing-mode:lr-tb; text-anchor:middle;
+          fill-opacity:1; stroke:#FFFFFF;
+          stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
+          stroke-miterlimit:4; stroke-dasharray:none
+        {'}'}
+        </style>''' )
       if family=='LMsans':
         print(f'''    <style>
         .mytext {'{'}
@@ -114,16 +117,13 @@ class Bubble_World:
 
         col0 = self.bubble[t0]['stroke']
         col1 = self.bubble[t1]['stroke']
-        print(f' <g transform="rotate({-angle/math.pi*180},{x},{y0})">\
-<path d=" \
-M {dx0} {dy0} \
-a {R}, {R}  0 0 0 {dx1} {+dy1} \
-h {dx2} \
-a {R}, {R}  0 0 0 {dx1} {-dy1} \
-z" \
-fill="url(\'#myGradient{col0}.{col1}\')" \
-/> \
-</g>')
+        print(f'  <g transform="rotate({-angle/math.pi*180},{x},{y0})"> <path d=" ' \
+              f'M {dx0} {dy0} '\
+              f'a {R}, {R}  0 0 0 {dx1} {+dy1} '\
+              f'h {dx2} '\
+              f'a {R}, {R}  0 0 0 {dx1} {-dy1} '\
+              f'z" '\
+              f'fill="url(\'#myGradient{col0}.{col1}\')" /> </g>')
 
     def put_liaison_equal(self, x,y0,y1,t0,t1,h):
 
@@ -196,9 +196,8 @@ fill="url(\'#myGradient{col0}.{col1}\')" \
     def put_text(self, x,y, text, fs=12, fc=0x000000):
       print(f'  <text x="{x}" y="{y}" class="mytext" font-size="{fs}px" fill="#{fc:06x}">')
       l = (len(text)-1.5)/2
-      print(f'    <tspan x="{x}" dy="{-l}em">', text[0], '</tspan>')
-      for line in text[1:]:
-        print(f'    <tspan x="{x}" dy="1em">', line, '</tspan>')
+      for i,line in enumerate(text):
+          print(f'    <tspan x="{x}" dy="{-l if i is 0 else 1}em"> {line} </tspan>')
       print('  </text>')
 
     def add_liaison(self, *args, **kwargs):
@@ -231,8 +230,11 @@ fill="url(\'#myGradient{col0}.{col1}\')" \
         self.print_head(xcanv, ycanv)
         self.print_def()
         self.put_all_liaisons()
+        print()
         self.put_all_bubbles()
+        print()
         self.put_all_texts()
+        print()
         self.print_tail()
         #print([hex(x) for x in self._colors])
         #print(self._colorsid)

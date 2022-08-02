@@ -50,14 +50,13 @@ class Bubble_World:
               '</symbol>' % (bub['r'], self._colors[bub['fill']], self._colors[bub['stroke']], bub['stroke_w']))
 
     def print_def_gradient(self, offset=30.0):
-        for ii,jj in set(self._pairs):
-           for i,j in ((ii,jj), (jj,ii)):
-              bubi = self.bubble[i]
-              bubj = self.bubble[j]
-              print('    <linearGradient id="myGradient%d.%d" x1="0" x2="0" y1="0" y2="1">\
+        for i,j in set(self._pairs):
+            coli = self._colors[i]
+            colj = self._colors[j]
+            print('    <linearGradient id="myGradient%d.%d" x1="0" x2="0" y1="0" y2="1">\
         <stop offset="%d%%" stop-color="#%06x" />\
         <stop offset="%d%%" stop-color="#%06x" />\
-        </linearGradient>'%(i, j, offset, self._colors[bubi['stroke']], 100-offset, self._colors[bubj['stroke']]))
+        </linearGradient>'%(i, j, offset, coli, 100-offset, colj))
 
     def print_def_font(self, family='LMsans', weight='normal'):
       if family=='Helvetica':
@@ -91,14 +90,15 @@ class Bubble_World:
       print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />');
 
 
-    def put_liaison(self, t0, x0, y0, t1, x1, y1_, alpha=None, h=None, auto=True):
+    def put_liaison(self, t0, x0, y0, t1, x1, y1_, alpha=None, h=None, auto=True, check=False, mirrored=False):
 
         r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
         r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
 
         if r0 < r1:
-           self.put_liaison(t1, x1, y1_, t0, x0, y0, alpha, h, auto)
-           return
+            return self.put_liaison(t1, x1, y1_, t0, x0, y0, alpha=alpha, h=h, auto=auto, check=check, mirrored=True)
+        if check is True:
+            return mirrored
 
         angle = math.pi/2 - math.atan2(y1_-y0,x1-x0)
         l = math.sqrt( (x0-x1)**2 + (y0-y1_)**2)
@@ -112,6 +112,8 @@ class Bubble_World:
         else:
             R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_equal(x,y0,y1,t0,t1,h)
 
+        col0 = self.bubble[t0]['stroke']
+        col1 = self.bubble[t1]['stroke']
         print(f' <g transform="rotate({-angle/math.pi*180},{x},{y0})">\
 <path d=" \
 M {dx0} {dy0} \
@@ -119,7 +121,7 @@ a {R}, {R}  0 0 0 {dx1} {+dy1} \
 h {dx2} \
 a {R}, {R}  0 0 0 {dx1} {-dy1} \
 z" \
-fill="url(\'#myGradient{t0}.{t1}\')" \
+fill="url(\'#myGradient{col0}.{col1}\')" \
 /> \
 </g>')
 
@@ -200,7 +202,10 @@ fill="url(\'#myGradient{t0}.{t1}\')" \
       print('  </text>')
 
     def add_liaison(self, *args, **kwargs):
-      self._pairs.append((args[0], args[3]))
+      mirrored = self.put_liaison(*args, check=True)
+      col0 = self.bubble[args[0]]['stroke']
+      col1 = self.bubble[args[3]]['stroke']
+      self._pairs.append( (col0,col1) if mirrored is False else (col1,col0) )
       self._liaisons.append((args, kwargs))
 
     def add_bubble(self, *args):

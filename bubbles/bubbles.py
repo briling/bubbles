@@ -91,7 +91,7 @@ class Bubble_World:
       print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />');
 
 
-    def put_liaison(self, t0, x0, y0, t1, x1, y1_, alpha=None, h=None, auto=False):
+    def put_liaison(self, t0, x0, y0, t1, x1, y1_, alpha=None, h=None, auto=True):
 
         r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
         r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
@@ -108,11 +108,22 @@ class Bubble_World:
         if h is None:
             h = 0.666*r1
         if abs(r0-r1)>1e-4:
-            self.put_liaison_diffr(x,y0,y1,t0,t1,alpha,h,angle, auto)
+            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_diffr(x,y0,y1,t0,t1,alpha,h,auto)
         else:
-            self.put_liaison_equal(x,y0,y1,t0,t1,h, angle)
+            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_equal(x,y0,y1,t0,t1,h)
 
-    def put_liaison_equal(self, x,y0,y1,t0,t1,h,angle):
+        print(f' <g transform="rotate({-angle/math.pi*180},{x},{y0})">\
+<path d=" \
+M {dx0} {dy0} \
+a {R}, {R}  0 0 0 {dx1} {+dy1} \
+h {dx2} \
+a {R}, {R}  0 0 0 {dx1} {-dy1} \
+z" \
+fill="url(\'#myGradient{t0}.{t1}\')" \
+/> \
+</g>')
+
+    def put_liaison_equal(self, x,y0,y1,t0,t1,h):
 
       r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
 
@@ -125,20 +136,9 @@ class Bubble_World:
 
       xx = dx*r0 / dr
       yy = dy*r0 / dr
+      return R, x+xx, y0+yy, 0,  2*(dy-yy), -2*xx
 
-      print(f' <g transform="rotate({-angle/math.pi*180},{x},{y0})">\n\
-        <path d=" \n\
-        M {x+xx} {y0+yy} \n\
-        A {R}, {R}  0 0 0 {x+xx} {y1-yy}  \n\
-        h {-2*xx}\n\
-        A {R}, {R}  0 0 0 {x-xx} {y0+yy}  \n\
-        z"\n\
-        fill="url(\'#myGradient{t0}.{t1}\')" \n\
-        />\n\
-      </g>')
-
-
-    def put_liaison_diffr(self, x,y0,y1,t0,t1,alpha,h,angle, auto=False):
+    def put_liaison_diffr(self, x,y0,y1,t0,t1,alpha,h,auto=True):
       #def cross2lines(x_1, y_1, x_2, y_2, x_3, y_3, x_4, y_4):
       #    x = ((x_1*y_2-y_1* x_2)*(x_3-x_4)-(x_1-x_2)*(x_3 *y_4-y_3* x_4)) / ((x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4))
       #    y = ((x_1*y_2-y_1* x_2)*(y_3-y_4)-(y_1-y_2)*(x_3 *y_4-y_3* x_4)) / ((x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4))
@@ -187,18 +187,9 @@ class Bubble_World:
           alpha = optimize.fsolve(lambda x: get_coord(x)[-1]-h, alpha) #, method=None, jac=None, hess=None, hessp=None, bounds=None, constraints=(), tol=None, callback=None, options=None)
           sina, cosa, X12, X21, R, hh = get_coord(alpha)
 
+      return R, Cx+X12*cosa, Cy+X12*sina, (X21-X12)*cosa, (X21-X12)*sina, -2*X21*cosa
 
-      print(f'\n\
-          <g transform="rotate({-angle/math.pi*180},{x},{y0})">\n\
-            <path d=" \n\
-            M {Cx+X12*cosa} {Cy+X12*sina} \n\
-            A {R},  {R}  0 0 0 {Cx+X21*cosa} {Cy+X21*sina}  \n\
-            h {-2*X21*cosa} \n\
-            A {R},  {R}  0 0 0 {Cx-X12*cosa} {Cy+X12*sina}  \n\
-            z" \n\
-            fill="url(\'#myGradient{t0}.{t1}\')" \n\
-            />\n\
-          </g>')
+
 
     def put_text(self, x,y, text, fs=12, fc=0x000000):
       print(f'  <text x="{x}" y="{y}" class="mytext" font-size="{fs}px" fill="#{fc:06x}">')

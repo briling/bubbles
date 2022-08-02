@@ -1,7 +1,8 @@
 import math
 
 class Bubble_World:
-    def __init__(self):
+    def __init__(self, xcanv=None, ycanv=None, grad_offset=30.0, font_family='Latin Modern Sans', font_weight='normal'):
+        self.pars = locals(); self.pars.pop('self')
         self.bubble = {}
         self._bubbles  = []
         self._liaisons = []
@@ -213,9 +214,9 @@ class Bubble_World:
       for [a,k] in self._texts:
           self.put_text(*a, **k)
 
-    def dump(self, xcanv, ycanv):
-        self.print_head(xcanv, ycanv)
-        self.print_def()
+    def dump(self):
+        self.print_head(*self.get_canvsize())
+        self.print_def(grad_offset=self.pars['grad_offset'], font_family=self.pars['font_family'], font_weight=self.pars['font_weight'])
         self.put_all_liaisons()
         print()
         self.put_all_bubbles()
@@ -223,9 +224,20 @@ class Bubble_World:
         self.put_all_texts()
         print()
         self.print_tail()
-        #print([hex(x) for x in self._colors])
-        #print(self._colorsid)
 
-
-
+    def get_canvsize(self):
+        xcanv=self.pars['xcanv']
+        ycanv=self.pars['ycanv']
+        if xcanv is None or ycanv is None:
+            xmax = ymax = 0
+            rmean = 0
+            for t,x,y in self._bubbles:
+                r = self.bubble[t]['r']+self.bubble[t]['stroke_w']/2
+                xmax = max(xmax, x+r)
+                ymax = max(ymax, y+r)
+                rmean += r
+            rmean /= len(self._bubbles)
+            if xcanv is None: xcanv = xmax+rmean/2
+            if ycanv is None: ycanv = ymax+rmean/2
+        return xcanv, ycanv
 

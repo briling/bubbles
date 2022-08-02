@@ -10,7 +10,7 @@ groseille = 0xB51F1F
 canard = 0x007480
 leman = 0x00A79F
 
-bubble_world = bubbles.Bubble_World()
+bubble_world = bubbles.Bubble_World(xcanv, ycanv)
 
 bubble_world.def_bubble(0, fill=0xFFFFFF, r=70, stroke=rouge,     stroke_w=15)
 bubble_world.def_bubble(1, fill=0xFFFFFF, r=70, stroke=groseille, stroke_w=15)
@@ -91,5 +91,5 @@ bubble_world.add_text(x11,y1,  ['density', 'of neighbors'], fs=22, fc=0x000000)
 bubble_world.add_text(x11,y11, ['electronic', 'structure'], fs=22, fc=0x000000)
 bubble_world.add_text(x3, y3,  ['SPAHM'], fs=25, fc=0x000000)
 
-bubble_world.dump(xcanv, ycanv)
+bubble_world.dump()
 

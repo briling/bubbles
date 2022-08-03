@@ -12,7 +12,6 @@ class Bubble_World:
         self._texts    = []
         self._colors   = []
         self._colorsid = []
-        self._pairs    = []
 
     def def_bubble(self, key, fill=0xFFFFFF, r=50, stroke=0x990000, stroke_w=10):
 
@@ -25,7 +24,7 @@ class Bubble_World:
                             'r'       :r,
                             'stroke'  :findcolor(stroke),
                             'stroke_w':stroke_w,
-                            'used'    :False}
+                           }
 
     def print_head(self, xcanv, ycanv):
         print('<svg xmlns="http://www.w3.org/2000/svg" '\
@@ -45,18 +44,29 @@ class Bubble_World:
       print()
 
     def print_def_bubble(self):
-      for key in self.bubble.keys():
-        bub = self.bubble[key]
+
+      idx = []
+      for a,k in self._bubbles:
+          idx.append(a[0])
+
+      for i in sorted(set(idx)):
+        bub = self.bubble[i]
         cf = self._colors[bub['fill']]
         cs = self._colors[bub['stroke']]
-        if bub['used'] is False: continue
-        print(f"  <symbol id='bubble{str(key)}'> "\
+        print(f"  <symbol id='bubble{str(i)}'> "\
               f"<circle cx='0' cy='0' r='{bub['r']}' "\
               f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/> "\
               '</symbol>')
 
     def print_def_gradient(self, offset=30.0):
-        for i,j in set(self._pairs):
+
+        idx = []
+        for [a,k] in self._liaisons:
+          col0 = self.bubble[a[0]]['stroke']
+          col1 = self.bubble[a[3]]['stroke']
+          idx.append( (col0,col1) )
+
+        for i,j in sorted(set(idx)):
             coli = self._colors[i]
             colj = self._colors[j]
             print(f'    <linearGradient id="myGradient{i}.{j}" x1="0" x2="0" y1="0" y2="1">'\
@@ -187,14 +197,10 @@ class Bubble_World:
       print('  </text>')
 
     def add_liaison(self, *args, **kwargs):
-      col0 = self.bubble[args[0]]['stroke']
-      col1 = self.bubble[args[3]]['stroke']
-      self._pairs.append( (col0,col1) )
       self._liaisons.append((args, kwargs))
 
-    def add_bubble(self, *args):
-      self.bubble[args[0]]['used'] = True
-      self._bubbles.append(args)
+    def add_bubble(self, *args, **kwargs):
+      self._bubbles.append((args, kwargs))
 
     def add_text(self, *args, **kwargs):
       self._texts.append((args, kwargs))
@@ -204,8 +210,8 @@ class Bubble_World:
           self.put_liaison(*a, **k)
 
     def put_all_bubbles(self):
-      for a in self._bubbles:
-          self.put_bubble(*a)
+      for [a,k] in self._bubbles:
+          self.put_bubble(*a, **k)
 
     def put_all_texts(self):
       for [a,k] in self._texts:

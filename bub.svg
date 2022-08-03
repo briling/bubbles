@@ -1,192 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="600">
   <defs>
-    <g id="bubble0"> <circle cx="0" cy="0" r="70.000000" fill="#ffffff" stroke="#ff0000" stroke-width="15.000000"/></g>
-    <g id="bubble1"> <circle cx="0" cy="0" r="70.000000" fill="#ffffff" stroke="#b51f1f" stroke-width="15.000000"/></g>
-    <g id="bubble2"> <circle cx="0" cy="0" r="70.000000" fill="#ffffff" stroke="#007480" stroke-width="15.000000"/></g>
-    <g id="bubble3"> <circle cx="0" cy="0" r="40.000000" fill="#ffffff" stroke="#007480" stroke-width="10.000000"/></g>
-    <g id="bubble4"> <circle cx="0" cy="0" r="70.000000" fill="#ffffff" stroke="#00a79f" stroke-width="15.000000"/></g>
-    <g id="bubble5"> <circle cx="0" cy="0" r="30.000000" fill="#ffffff" stroke="#00a79f" stroke-width="12.000000"/></g>
-    <g id="bubble6"> <circle cx="0" cy="0" r="40.000000" fill="#ffffff" stroke="#00a79f" stroke-width="10.000000"/></g>
-
-    <linearGradient id="myGradient0.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#ff0000" />        <stop offset="70%" stop-color="#ff0000" />        </linearGradient>
-    <linearGradient id="myGradient0.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#ff0000" />        <stop offset="70%" stop-color="#b51f1f" />        </linearGradient>
-    <linearGradient id="myGradient0.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#ff0000" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient0.3" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#ff0000" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient0.4" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#ff0000" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient0.5" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#ff0000" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient0.6" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#ff0000" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient1.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#b51f1f" />        <stop offset="70%" stop-color="#ff0000" />        </linearGradient>
-    <linearGradient id="myGradient1.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#b51f1f" />        <stop offset="70%" stop-color="#b51f1f" />        </linearGradient>
-    <linearGradient id="myGradient1.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#b51f1f" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient1.3" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#b51f1f" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient1.4" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#b51f1f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient1.5" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#b51f1f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient1.6" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#b51f1f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient2.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#ff0000" />        </linearGradient>
-    <linearGradient id="myGradient2.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#b51f1f" />        </linearGradient>
-    <linearGradient id="myGradient2.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient2.3" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient2.4" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient2.5" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient2.6" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient3.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#ff0000" />        </linearGradient>
-    <linearGradient id="myGradient3.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#b51f1f" />        </linearGradient>
-    <linearGradient id="myGradient3.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient3.3" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient3.4" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient3.5" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient3.6" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#007480" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient4.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#ff0000" />        </linearGradient>
-    <linearGradient id="myGradient4.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#b51f1f" />        </linearGradient>
-    <linearGradient id="myGradient4.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient4.3" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient4.4" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient4.5" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient4.6" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient5.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#ff0000" />        </linearGradient>
-    <linearGradient id="myGradient5.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#b51f1f" />        </linearGradient>
-    <linearGradient id="myGradient5.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient5.3" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient5.4" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient5.5" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient5.6" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient6.0" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#ff0000" />        </linearGradient>
-    <linearGradient id="myGradient6.1" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#b51f1f" />        </linearGradient>
-    <linearGradient id="myGradient6.2" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient6.3" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#007480" />        </linearGradient>
-    <linearGradient id="myGradient6.4" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient6.5" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
-    <linearGradient id="myGradient6.6" gradientTransform="rotate(90)">        <stop offset="30%" stop-color="#00a79f" />        <stop offset="70%" stop-color="#00a79f" />        </linearGradient>
+    <linearGradient id="myGradient1.2" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#ff0000"/> <stop offset="70.0%" stop-color="#b51f1f"/> </linearGradient>
+    <linearGradient id="myGradient1.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#ff0000"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
+    <linearGradient id="myGradient3.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#007480"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
+    <linearGradient id="myGradient3.4" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#007480"/> <stop offset="70.0%" stop-color="#00a79f"/> </linearGradient>
+    <linearGradient id="myGradient4.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#00a79f"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
+    <linearGradient id="myGradient4.4" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#00a79f"/> <stop offset="70.0%" stop-color="#00a79f"/> </linearGradient>
 
     <style>
         .mytext {
+          font-style:normal; font-variant:normal; font-weight:normal; font-stretch:normal;
           line-height:125%;
-          font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;
-          font-family:"Latin Modern Sans";-inkscape-font-specification:"Latin Modern Sans";
-          text-align:center;text-anchor:middle;
+          font-family:"Latin Modern Sans"; -inkscape-font-specification:"Latin Modern Sans";
+          font-variant-ligatures:normal; font-variant-caps:normal; font-variant-numeric:normal; font-feature-settings:normal;
+          text-align:start; letter-spacing:0px; word-spacing:0px; writing-mode:lr-tb; text-anchor:middle;
           fill-opacity:1; stroke:#FFFFFF;
           stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
           stroke-miterlimit:4; stroke-dasharray:none
         }
-          </style>
+        </style>
   </defs>
 
- <g transform="rotate(-225.0,250,250)">
-        <path d=" 
-        M 290.2608802153539 316.2216846983292 
-        A 30.079576884944636, 30.079576884944636  0 0 0 290.2608802153539 367.62607841017314  
-        h -80.52176043070776
-        A 30.079576884944636, 30.079576884944636  0 0 0 209.7391197846461 316.2216846983292  
-        z"
-        fill="url('#myGradient0.1')" 
-        />
-      </g>
- <g transform="rotate(-135.0,250,250)">
-        <path d=" 
-        M 290.2608802153539 316.2216846983292 
-        A 30.079576884944636, 30.079576884944636  0 0 0 290.2608802153539 367.62607841017314  
-        h -80.52176043070776
-        A 30.079576884944636, 30.079576884944636  0 0 0 209.7391197846461 316.2216846983292  
-        z"
-        fill="url('#myGradient0.1')" 
-        />
-      </g>
- <g transform="rotate(45.0,250,250)">
-        <path d=" 
-        M 290.2608802153539 316.2216846983292 
-        A 30.079576884944636, 30.079576884944636  0 0 0 290.2608802153539 367.62607841017314  
-        h -80.52176043070776
-        A 30.079576884944636, 30.079576884944636  0 0 0 209.7391197846461 316.2216846983292  
-        z"
-        fill="url('#myGradient0.1')" 
-        />
-      </g>
- <g transform="rotate(-45.0,250,250)">
-        <path d=" 
-        M 290.2608802153539 316.2216846983292 
-        A 30.079576884944636, 30.079576884944636  0 0 0 290.2608802153539 367.62607841017314  
-        h -80.52176043070776
-        A 30.079576884944636, 30.079576884944636  0 0 0 209.7391197846461 316.2216846983292  
-        z"
-        fill="url('#myGradient0.2')" 
-        />
-      </g>
- <g transform="rotate(-90.0,380,380)">
-        <path d=" 
-        M 424.81581344374183 443.2281018644062 
-        A 45.07208063307058, 45.07208063307058  0 0 0 424.81581344374183 516.7718981355938  
-        h -89.63162688748363
-        A 45.07208063307058, 45.07208063307058  0 0 0 335.18418655625817 443.2281018644062  
-        z"
-        fill="url('#myGradient2.4')" 
-        />
-      </g>
+  <symbol id='bubble0'> <circle cx='0' cy='0' r='70' fill='#ffffff' stroke='#ff0000' stroke-width='15'/> </symbol>
+  <symbol id='bubble1'> <circle cx='0' cy='0' r='70' fill='#ffffff' stroke='#b51f1f' stroke-width='15'/> </symbol>
+  <symbol id='bubble2'> <circle cx='0' cy='0' r='70' fill='#ffffff' stroke='#007480' stroke-width='15'/> </symbol>
+  <symbol id='bubble3'> <circle cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/> </symbol>
+  <symbol id='bubble4'> <circle cx='0' cy='0' r='70' fill='#ffffff' stroke='#00a79f' stroke-width='15'/> </symbol>
+  <symbol id='bubble5'> <circle cx='0' cy='0' r='30' fill='#ffffff' stroke='#00a79f' stroke-width='12'/> </symbol>
+  <symbol id='bubble6'> <circle cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/> </symbol>
 
-          <g transform="rotate(-38.659808254090095,380,380)">
-            <path d=" 
-            M 343.96888211909646 481.1040251440645 
-            A 25.242867687890136,  25.242867687890136  0 0 0 337.5754274345091 444.85680876080335  
-            h 84.8491451309818 
-            A 25.242867687890136,  25.242867687890136  0 0 0 416.03111788090354 481.1040251440645  
-            z" 
-            fill="url('#myGradient2.3')" 
-            />
-          </g>
+  <g transform="rotate(-225.0,250,250)"> <path d=" M 290.2608802153539 316.2216846983292 a 30.079576884944636, 30.079576884944636  0 0 0 0 51.404393711843966 h -80.52176043070776 a 30.079576884944636, 30.079576884944636  0 0 0 0 -51.404393711843966 z" fill="url('#myGradient1.2')" /> </g>
+  <g transform="rotate(-225.0,250,250)"> <path d=" M 290.2608802153539 316.2216846983292 a 30.079576884944636, 30.079576884944636  0 0 0 0 51.404393711843966 h -80.52176043070776 a 30.079576884944636, 30.079576884944636  0 0 0 0 -51.404393711843966 z" fill="url('#myGradient1.2')" /> </g>
+  <g transform="rotate(-135.0,250,250)"> <path d=" M 290.2608802153539 316.2216846983292 a 30.079576884944636, 30.079576884944636  0 0 0 0 51.404393711843966 h -80.52176043070776 a 30.079576884944636, 30.079576884944636  0 0 0 0 -51.404393711843966 z" fill="url('#myGradient1.2')" /> </g>
+  <g transform="rotate(45.0,250,250)"> <path d=" M 290.2608802153539 316.2216846983292 a 30.079576884944636, 30.079576884944636  0 0 0 0 51.404393711843966 h -80.52176043070776 a 30.079576884944636, 30.079576884944636  0 0 0 0 -51.404393711843966 z" fill="url('#myGradient1.2')" /> </g>
+  <g transform="rotate(-45.0,250,250)"> <path d=" M 290.2608802153539 316.2216846983292 a 30.079576884944636, 30.079576884944636  0 0 0 0 51.404393711843966 h -80.52176043070776 a 30.079576884944636, 30.079576884944636  0 0 0 0 -51.404393711843966 z" fill="url('#myGradient1.3')" /> </g>
+  <g transform="rotate(-90.0,380,380)"> <path d=" M 424.81581344374183 443.2281018644062 a 45.07208063307058, 45.07208063307058  0 0 0 0 73.54379627118755 h -89.63162688748363 a 45.07208063307058, 45.07208063307058  0 0 0 0 -73.54379627118755 z" fill="url('#myGradient3.4')" /> </g>
+  <g transform="rotate(-38.659808254090095,380,380)"> <path d=" M 343.9687051028671 481.104261735338 a 25.24330071367573, 25.24330071367573  0 0 0 -6.39356882441544 -36.24764342842934 h 84.84972744309668 a 25.24330071367573, 25.24330071367573  0 0 0 -6.39356882441544 36.24764342842934 z" fill="url('#myGradient3.3')" /> </g>
+  <g transform="rotate(-141.34019174590992,380,380)"> <path d=" M 343.9687051028671 481.104261735338 a 25.24330071367573, 25.24330071367573  0 0 0 -6.39356882441544 -36.24764342842934 h 84.84972744309668 a 25.24330071367573, 25.24330071367573  0 0 0 -6.39356882441544 36.24764342842934 z" fill="url('#myGradient3.3')" /> </g>
+  <g transform="rotate(-71.56505117707799,580,380)"> <path d=" M 559.5190526443405 508.5076202348991 a 31.85239908200444, 31.85239908200444  0 0 0 -6.877165410076857 -55.99704400013696 h 54.716225531472695 a 31.85239908200444, 31.85239908200444  0 0 0 -6.877165410076857 55.99704400013696 z" fill="url('#myGradient4.4')" /> </g>
+  <g transform="rotate(-108.43494882292201,580,380)"> <path d=" M 559.5190526443405 508.5076202348991 a 31.85239908200444, 31.85239908200444  0 0 0 -6.877165410076857 -55.99704400013696 h 54.716225531472695 a 31.85239908200444, 31.85239908200444  0 0 0 -6.877165410076857 55.99704400013696 z" fill="url('#myGradient4.4')" /> </g>
+  <g transform="rotate(-63.43494882292201,730,430)"> <path d=" M 711.8915557193635 500.6077165073557 a 21.517413049459076, 21.517413049459076  0 0 0 1.3548831722821755 -38.743658539348004 h 33.507122216708524 a 21.517413049459076, 21.517413049459076  0 0 0 1.3548831722821755 38.743658539348004 z" fill="url('#myGradient4.3')" /> </g>
+  <g transform="rotate(-116.56505117707799,730,430)"> <path d=" M 711.8915557193635 500.6077165073557 a 21.517413049459076, 21.517413049459076  0 0 0 1.3548831722821755 -38.743658539348004 h 33.507122216708524 a 21.517413049459076, 21.517413049459076  0 0 0 1.3548831722821755 38.743658539348004 z" fill="url('#myGradient4.3')" /> </g>
 
-          <g transform="rotate(-141.34019174590992,380,380)">
-            <path d=" 
-            M 343.96888211909646 481.1040251440645 
-            A 25.242867687890136,  25.242867687890136  0 0 0 337.5754274345091 444.85680876080335  
-            h 84.8491451309818 
-            A 25.242867687890136,  25.242867687890136  0 0 0 416.03111788090354 481.1040251440645  
-            z" 
-            fill="url('#myGradient2.3')" 
-            />
-          </g>
-
-          <g transform="rotate(-71.56505117707799,580,380)">
-            <path d=" 
-            M 559.5189519669685 508.50768988149593 
-            A 31.85252008262291,  31.85252008262291  0 0 0 552.6417342358194 452.5105185085341  
-            h 54.71653152836114 
-            A 31.85252008262291,  31.85252008262291  0 0 0 600.4810480330315 508.50768988149593  
-            z" 
-            fill="url('#myGradient4.5')" 
-            />
-          </g>
-
-          <g transform="rotate(-108.43494882292201,580,380)">
-            <path d=" 
-            M 559.5189519669685 508.50768988149593 
-            A 31.85252008262291,  31.85252008262291  0 0 0 552.6417342358194 452.5105185085341  
-            h 54.71653152836114 
-            A 31.85252008262291,  31.85252008262291  0 0 0 600.4810480330315 508.50768988149593  
-            z" 
-            fill="url('#myGradient4.5')" 
-            />
-          </g>
-
-          <g transform="rotate(-243.43494882292202,830,480)">
-            <path d=" 
-            M 813.2463070552327 559.9394102245949 
-            A 21.517527743019002,  21.517527743019002  0 0 0 811.891408335418 521.1956175815515  
-            h 36.21718332916415 
-            A 21.517527743019002,  21.517527743019002  0 0 0 846.7536929447673 559.9394102245949  
-            z" 
-            fill="url('#myGradient6.5')" 
-            />
-          </g>
-
-          <g transform="rotate(63.43494882292201,830,380)">
-            <path d=" 
-            M 813.2463070552325 459.93941022459506 
-            A 21.51752774301915,  21.51752774301915  0 0 0 811.8914083354177 421.1956175815516  
-            h 36.21718332916461 
-            A 21.51752774301915,  21.51752774301915  0 0 0 846.7536929447675 459.93941022459506  
-            z" 
-            fill="url('#myGradient6.5')" 
-            />
-          </g>
   <use x="250" y="250" xlink:href="#bubble0" />
   <use x="120" y="120" xlink:href="#bubble1" />
   <use x="380" y="380" xlink:href="#bubble2" />
@@ -199,6 +54,7 @@
   <use x="730" y="330" xlink:href="#bubble5" />
   <use x="830" y="480" xlink:href="#bubble6" />
   <use x="830" y="380" xlink:href="#bubble6" />
+
   <text x="250" y="250" class="mytext" font-size="14px" fill="#000000">
     <tspan x="250" dy="-0.25em"> QML </tspan>
     <tspan x="250" dy="1em"> representations </tspan>
@@ -222,4 +78,5 @@
   <text x="580" y="380" class="mytext" font-size="25px" fill="#000000">
     <tspan x="580" dy="0.25em"> SPAHM </tspan>
   </text>
+
 </svg>

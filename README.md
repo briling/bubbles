@@ -6,9 +6,10 @@ with a python code...
 
 and now you can!
 
-![example](example.svg)
+![example](bub.svg)
 
 
 
 TODO:
-* readme
+* good readme
+* real package

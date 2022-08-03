@@ -12,7 +12,6 @@ class Bubble_World:
         self._texts    = []
         self._colors   = []
         self._colorsid = []
-        self._usedump  = False
 
     def def_bubble(self, key, fill=0xFFFFFF, r=50, stroke=0x990000, stroke_w=10):
 
@@ -34,26 +33,24 @@ class Bubble_World:
     def print_tail(self):
       print('</svg>');
 
-    def print_def(self, grad_offset=30.0, font_family='Latin Modern Sans', font_weight='normal'):
+    def print_def(self, dump=False, grad_offset=30.0, font_family='Latin Modern Sans', font_weight='normal'):
       print('  <defs>');
-      self.print_def_gradient(offset=grad_offset)
+      self.print_def_gradient(dump=dump, offset=grad_offset)
       print()
       self.print_def_font(family=font_family,weight=font_weight)
       print('  </defs>');
       print()
-      self.print_def_bubble()
+      self.print_def_bubble(dump=dump)
       print()
 
-    def print_def_bubble(self):
+    def print_def_bubble(self, dump=False):
 
-      if self._usedump:
-          idx = []
-          for a,k in self._bubbles:
-              idx.append(a[0])
+      if dump is True:
+          idx = set([a[0] for a,k in self._bubbles])
       else:
           idx = list(self.bubble.keys())
 
-      for i in sorted(set(idx)):
+      for i in sorted(idx):
         bub = self.bubble[i]
         cf = self._colors[bub['fill']]
         cs = self._colors[bub['stroke']]
@@ -62,21 +59,12 @@ class Bubble_World:
               f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/> "\
               '</symbol>')
 
-    def print_def_gradient(self, offset=30.0):
+    def print_def_gradient(self, offset=30.0, dump=False):
 
-        if self._usedump:
-          idx = []
-          for [a,k] in self._liaisons:
-            col0 = self.bubble[a[0]]['stroke']
-            col1 = self.bubble[a[3]]['stroke']
-            idx.append( (col0,col1) )
+        if dump is True:
+            idx = [ (self.bubble[a[0]]['stroke'],self.bubble[a[3]]['stroke']) for [a,k] in self._liaisons ]
         else:
-          idx = []
-          for i in self.bubble.keys():
-            for j in self.bubble.keys():
-              col0 = self.bubble[i]['stroke']
-              col1 = self.bubble[j]['stroke']
-              idx.append( (col0,col1) )
+            idx = [ (self.bubble[i   ]['stroke'],self.bubble[j   ]['stroke']) for i in self.bubble.keys() for j in self.bubble.keys() ]
 
         for i,j in sorted(set(idx)):
             coli = self._colors[i]
@@ -252,9 +240,8 @@ class Bubble_World:
           self.put_text(*a, **k)
 
     def dump(self):
-        self._usedump = True
         self.print_head(*self.get_canvsize())
-        self.print_def(grad_offset=self.pars['grad_offset'], font_family=self.pars['font_family'], font_weight=self.pars['font_weight'])
+        self.print_def(dump=True, grad_offset=self.pars['grad_offset'], font_family=self.pars['font_family'], font_weight=self.pars['font_weight'])
         self.put_all_liaisons()
         print()
         self.put_all_bubbles()

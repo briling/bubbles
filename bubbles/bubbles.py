@@ -12,6 +12,7 @@ class Bubble_World:
         self._texts    = []
         self._colors   = []
         self._colorsid = []
+        self._usedump  = False
 
     def def_bubble(self, key, fill=0xFFFFFF, r=50, stroke=0x990000, stroke_w=10):
 
@@ -45,9 +46,12 @@ class Bubble_World:
 
     def print_def_bubble(self):
 
-      idx = []
-      for a,k in self._bubbles:
-          idx.append(a[0])
+      if self._usedump:
+          idx = []
+          for a,k in self._bubbles:
+              idx.append(a[0])
+      else:
+          idx = list(self.bubble.keys())
 
       for i in sorted(set(idx)):
         bub = self.bubble[i]
@@ -60,11 +64,19 @@ class Bubble_World:
 
     def print_def_gradient(self, offset=30.0):
 
-        idx = []
-        for [a,k] in self._liaisons:
-          col0 = self.bubble[a[0]]['stroke']
-          col1 = self.bubble[a[3]]['stroke']
-          idx.append( (col0,col1) )
+        if self._usedump:
+          idx = []
+          for [a,k] in self._liaisons:
+            col0 = self.bubble[a[0]]['stroke']
+            col1 = self.bubble[a[3]]['stroke']
+            idx.append( (col0,col1) )
+        else:
+          idx = []
+          for i in self.bubble.keys():
+            for j in self.bubble.keys():
+              col0 = self.bubble[i]['stroke']
+              col1 = self.bubble[j]['stroke']
+              idx.append( (col0,col1) )
 
         for i,j in sorted(set(idx)):
             coli = self._colors[i]
@@ -238,6 +250,7 @@ class Bubble_World:
           self.put_text(*a, **k)
 
     def dump(self):
+        self._usedump = True
         self.print_head(*self.get_canvsize())
         self.print_def(grad_offset=self.pars['grad_offset'], font_family=self.pars['font_family'], font_weight=self.pars['font_weight'])
         self.put_all_liaisons()

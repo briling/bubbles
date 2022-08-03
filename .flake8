@@ -1,0 +1,4 @@
+[flake8]
+
+per-file-ignores =
+    bubbles/bubbles.py:E702,W391,E203,E701,E741,E202,E231,E221,E501

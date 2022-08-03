@@ -1,7 +1,10 @@
 import math
 
 class Bubble_World:
-    def __init__(self, xcanv=None, ycanv=None, grad_offset=30.0, font_family='Latin Modern Sans', font_weight='normal'):
+    def __init__(self,
+                 xcanv=None, ycanv=None,
+                 grad_offset=30.0,
+                 font_family='Latin Modern Sans', font_weight='normal'):
         self.pars = locals(); self.pars.pop('self')
         self.bubble = {}
         self._bubbles  = []
@@ -81,15 +84,10 @@ class Bubble_World:
       print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />');
 
 
-    def put_liaison(self, t0, x0, y0, t1, x1, y1_, alpha=None, h=None, auto=True, check=False, mirrored=False):
+    def put_liaison(self, t0, x0, y0, t1, x1, y1_, h=None, auto=True, alpha=None):
 
         r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
         r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
-
-        if r0 < r1:
-            return self.put_liaison(t1, x1, y1_, t0, x0, y0, alpha=alpha, h=h, auto=auto, check=check, mirrored=True)
-        if check is True:
-            return mirrored
 
         angle = math.pi/2 - math.atan2(y1_-y0,x1-x0)
         l = math.sqrt( (x0-x1)**2 + (y0-y1_)**2)
@@ -189,10 +187,9 @@ class Bubble_World:
       print('  </text>')
 
     def add_liaison(self, *args, **kwargs):
-      mirrored = self.put_liaison(*args, check=True)
       col0 = self.bubble[args[0]]['stroke']
       col1 = self.bubble[args[3]]['stroke']
-      self._pairs.append( (col0,col1) if mirrored is False else (col1,col0) )
+      self._pairs.append( (col0,col1) )
       self._liaisons.append((args, kwargs))
 
     def add_bubble(self, *args):

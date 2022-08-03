@@ -135,26 +135,26 @@ class Bubble_World:
 
     def put_liaison_equal(self, r0, x, y0, y1, h):
 
-      '''
-      There are 2 circles C0, C1 with radius r0 centered at the points (x,y0) and (x,y1).
-      We search for two other circles C2, C2' of the same radius tangent to C0 and C1
-      so that the shortest distance between C2 and C2' = h.
-      R is the radius of C2 and C2' and other values are needed to find the tangent points
-      required to draw the liaison using the arc svg shape.
+       '''
+       There are 2 circles C0, C1 with radius r0 centered at the points (x,y0) and (x,y1).
+       We search for two other circles C2, C2' of the same radius tangent to C0 and C1
+       so that the shortest distance between C2 and C2' = h.
+       R is the radius of C2 and C2' and other values are needed to find the tangent points
+       required to draw the liaison using the arc svg shape.
 
-      All the equations can be easily derived used the Pythagorean theorem.
-      '''
+       All the equations can be easily derived used the Pythagorean theorem.
+       '''
 
-      l = abs(y1-y0)
-      R = (0.25*l**2 + 0.25*h**2 - r0**2) / (2.0*r0 - h)
+       l = abs(y1-y0)
+       R = (0.25*l**2 + 0.25*h**2 - r0**2) / (2.0*r0 - h)
 
-      dx = 0.5*h + R
-      dy = 0.5*l
-      dr = math.hypot(dx, dy)
+       dx = 0.5*h + R
+       dy = 0.5*l
+       dr = math.hypot(dx, dy)
 
-      xx = dx*r0 / dr
-      yy = dy*r0 / dr
-      return R, x+xx, y0+yy, 0,  2.0*(dy-yy), -2.0*xx
+       xx = dx*r0 / dr
+       yy = dy*r0 / dr
+       return R, x+xx, y0+yy, 0,  2.0*(dy-yy), -2.0*xx
 
 
     def put_liaison_diffr(self, r0, r1, x, y0, y1, alpha, h, auto=True):
@@ -167,57 +167,59 @@ class Bubble_World:
       required to draw the liaison using the arc svg shape.
 
       In this case (r0!=r1) the derivation is less straightforward
-      (see https://en.wikipedia.org/wiki/Tangent_lines_to_circles#Tangent_lines_to_two_circles
-      and https://en.wikipedia.org/wiki/Homothetic_center#Tangent_circles_and_antihomologous_points).
-      We can send two secant rays from the homothetic center (specifying the angle between the rays)
+      (see https://en.wikipedia.org/wiki/Homothetic_center#Tangent_circles_and_antihomologous_points).
+      We can send two secant rays from the homothetic center
+      (specifying the angle between the rays and the line connecting the centers)
       and thus find the tangent points and then R.
       However I could not find a closed expression connecting these values to h
       so the right angle is found through 1D optimization.
       '''
 
-      def PX(x, y0, y1, l, EO1, C, D, X11, X12, cosa, sina):
+      def PX(y0, y1, l, EO1, B, C, sD, cosb, sinb):
           # obtained from a simplification of the general expression for the crossing of two lines
-          px = x                            - cosa*l*C / ( EO1 * math.sqrt(D) )
-          py = (X11*y0-X12*y1)/math.sqrt(D) - sina*l*C / ( EO1 * math.sqrt(D) )
+          px = cosb*l*C / ( EO1 * sD )
+          py = sinb*l*C / ( EO1 * sD ) - 0.5 * (B*l/sD + (y0+y1))
           return px, py
 
       def get_coord(alpha):
-        # angle between the secant and the line connecting the centers
-        sina = math.sin((90-alpha)/180*math.pi)
-        cosa = math.cos((90-alpha)/180*math.pi)
-        # crossing point of the secants with the circle
-        B = 2 * EO1 * sina
-        C = EO1**2-r1**2
-        D = B*B-4*C
-        X11 = (-B +math.sqrt(D))*0.5
-        X12 = (-B -math.sqrt(D))*0.5
-        X21 = X11 * r0/r1
-        px, py = PX(x, y0, y1, l, EO1, C, D, X11, X12, cosa, sina) # center of the tangent circle
-        R = math.sqrt((px-(Cx+X21*cosa))**2 + (py-(Cy+X21*sina))**2) # radius of the tangent circle
-        h = 2*(x-px-R)  # distance between the two tangent circles
-        return sina, cosa, X12, X21, R, h
+          # the angle complementary to the angle between the secant and the line connecting the centers
+          sinb = math.cos(alpha)
+          cosb = math.sin(alpha)
+          # crossing points of the secants with the circles
+          B   = 2 * EO1 * sinb
+          C   = EO1**2-r1**2
+          sD  = math.sqrt(B*B-4*C)
+          X11 = (-B+sD)*0.5
+          X12 = (-B-sD)*0.5
+          X21 = X11 * r0/r1
+          px, py = PX(y0, y1, l, EO1, B, C, sD, cosb, sinb) # center of the tangent circle (with x==Cx==0)
+          R = math.hypot(px+(X21*cosb), py+(Cy+X21*sinb))   # radius of the tangent circle
+          h = 2*(px-R)                                      # distance between the two tangent circles
+          return sinb, cosb, X12, X21, R, h
 
 
-      # find the homothetic center
+      # the homothetic center
       l = abs(y1-y0)
       EO1 = r1*l / (r0-r1)
       EO0 = EO1+l
       Cx = x
       Cy = y1+EO1
-      cosb = r1/EO1 # angle between tangent rays
 
-      alpha_max = math.asin(cosb)/math.pi*180
       if alpha is None:
+          # angle between the tangent ray and the line connecting the centers
+          sin_alpha_max = r1/EO1
+          alpha_max = math.asin(sin_alpha_max)
           alpha = 0.5*alpha_max
-
-      if auto==False:
-          sina, cosa, X12, X21, R, hh = get_coord(alpha)
       else:
-          from scipy import optimize
-          alpha = optimize.fsolve(lambda x: get_coord(x)[-1]-h, alpha) #, method=None, jac=None, hess=None, hessp=None, bounds=None, constraints=(), tol=None, callback=None, options=None)
-          sina, cosa, X12, X21, R, hh = get_coord(alpha)
+          alpha *= math.pi/180.0
 
-      return R, Cx+X12*cosa, Cy+X12*sina, (X21-X12)*cosa, (X21-X12)*sina, -2*X21*cosa
+      if auto is True:
+          from scipy import optimize
+          alpha = optimize.fsolve(lambda x: get_coord(x)[-1]-h, alpha)
+
+      sinb, cosb, X12, X21, R, hh = get_coord(alpha)
+
+      return R, Cx+X12*cosb, Cy+X12*sinb, (X21-X12)*cosb, (X21-X12)*sinb, -2*X21*cosb
 
 
 

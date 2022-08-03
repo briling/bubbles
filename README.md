@@ -12,4 +12,3 @@ and now you can!
 
 TODO:
 * readme
-* translate comments

@@ -94,26 +94,26 @@ class Bubble_World:
       print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />');
 
 
-    def put_liaison(self, t0, x0, y0, t1, x1, y1_, h=None, auto=True, alpha=None):
+    def put_liaison(self, t0, x0, y0, t1, x1, y1, h=None, auto=True, alpha=None):
 
         r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
         r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
+        col0 = self.bubble[t0]['stroke']
+        col1 = self.bubble[t1]['stroke']
 
-        angle = math.pi/2 - math.atan2(y1_-y0,x1-x0)
-        l = math.sqrt( (x0-x1)**2 + (y0-y1_)**2)
-        x = x0
-        y1 = y0+l
+        # virtually align the liaison with the y-axis
+        angle = math.pi/2 - math.atan2(y1-y0,x1-x0)
+        l   = math.hypot( x0-x1 , y0-y1)
+        y11 = y0+l
 
         if h is None:
             h = 0.666*r1
         if abs(r0-r1)>1e-4:
-            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_diffr(x,y0,y1,t0,t1,alpha,h,auto)
+            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto)
         else:
-            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_equal(x,y0,y1,t0,t1,h)
+            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_equal(r0, x0, y0, y11, h)
 
-        col0 = self.bubble[t0]['stroke']
-        col1 = self.bubble[t1]['stroke']
-        print(f'  <g transform="rotate({-angle/math.pi*180},{x},{y0})"> <path d=" ' \
+        print(f'  <g transform="rotate({-angle/math.pi*180},{x0},{y0})"> <path d=" ' \
               f'M {dx0} {dy0} '\
               f'a {R}, {R}  0 0 0 {dx1} {+dy1} '\
               f'h {dx2} '\
@@ -121,58 +121,78 @@ class Bubble_World:
               f'z" '\
               f'fill="url(\'#myGradient{col0}.{col1}\')" /> </g>')
 
-    def put_liaison_equal(self, x,y0,y1,t0,t1,h):
+    def put_liaison_equal(self, r0, x, y0, y1, h):
 
-      r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
+      '''
+      There are 2 circles C0, C1 with radius r0 centered at the points (x,y0) and (x,y1).
+      We search for two other circles C2, C2' of the same radius tangent to C0 and C1
+      so that the shortest distance between C2 and C2' = h.
+      R is the radius of C2 and C2' and other values are needed to find the tangent points
+      required to draw the liaison using the arc svg shape.
+
+      All the equations can be easily derived used the Pythagorean theorem.
+      '''
 
       l = abs(y1-y0)
-      R = (0.25*l**2+0.25*h**2-r0**2) / (2*r0-h)
+      R = (0.25*l**2 + 0.25*h**2 - r0**2) / (2.0*r0 - h)
 
-      dx = 0.5*h+R
-      dy = (y1-y0)*0.5
-      dr = math.sqrt(dx**2 + dy**2)
+      dx = 0.5*h + R
+      dy = 0.5*l
+      dr = math.hypot(dx, dy)
 
       xx = dx*r0 / dr
       yy = dy*r0 / dr
-      return R, x+xx, y0+yy, 0,  2*(dy-yy), -2*xx
+      return R, x+xx, y0+yy, 0,  2.0*(dy-yy), -2.0*xx
 
-    def put_liaison_diffr(self, x,y0,y1,t0,t1,alpha,h,auto=True):
-      #def cross2lines(x_1, y_1, x_2, y_2, x_3, y_3, x_4, y_4):
-      #    x = ((x_1*y_2-y_1* x_2)*(x_3-x_4)-(x_1-x_2)*(x_3 *y_4-y_3* x_4)) / ((x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4))
-      #    y = ((x_1*y_2-y_1* x_2)*(y_3-y_4)-(y_1-y_2)*(x_3 *y_4-y_3* x_4)) / ((x_1-x_2)*(y_3-y_4)-(y_1-y_2)*(x_3-x_4))
-      #    return x,y
+
+    def put_liaison_diffr(self, r0, r1, x, y0, y1, alpha, h, auto=True):
+
+      '''
+      There are 2 circles C0, C1 with radii r0!=r1 centered at the points (x,y0) and (x,y1).
+      We search for two other circles C2, C2' of the same radius tangent to C0 and C1
+      so that the shortest distance between C2 and C2' = h.
+      R is the radius of C2 and C2' and other values are needed to find the tangent points
+      required to draw the liaison using the arc svg shape.
+
+      In this case (r0!=r1) the derivation is less straightforward
+      (see https://en.wikipedia.org/wiki/Tangent_lines_to_circles#Tangent_lines_to_two_circles
+      and https://en.wikipedia.org/wiki/Homothetic_center#Tangent_circles_and_antihomologous_points).
+      We can send two secant rays from the homothetic center (specifying the angle between the rays)
+      and thus find the tangent points and then R.
+      However I could not find a closed expression connecting these values to h
+      so the right angle is found through 1D optimization.
+      '''
+
       def PX(x, y0, y1, l, EO1, C, D, X11, X12, cosa, sina):
+          # obtained from a simplification of the general expression for the crossing of two lines
           px = x                            - cosa*l*C / ( EO1 * math.sqrt(D) )
           py = (X11*y0-X12*y1)/math.sqrt(D) - sina*l*C / ( EO1 * math.sqrt(D) )
           return px, py
 
       def get_coord(alpha):
-        sina = math.sin((90-alpha)/180*math.pi) # угол между секущей и прямой соединяющей центры
+        # angle between the secant and the line connecting the centers
+        sina = math.sin((90-alpha)/180*math.pi)
         cosa = math.cos((90-alpha)/180*math.pi)
-        # пересечение секущих с окружностями
+        # crossing point of the secants with the circle
         B = 2 * EO1 * sina
         C = EO1**2-r1**2
         D = B*B-4*C
         X11 = (-B +math.sqrt(D))*0.5
         X12 = (-B -math.sqrt(D))*0.5
         X21 = X11 * r0/r1
-        # px, py = cross2lines(x,y0,Cx+X21*cosa,Cy+X21*sina, x, y1, Cx+X12*cosa,  Cy+X12*sina) # центр касательной окружности
-        # print('X', px, '\t', py)
-        px, py = PX(x, y0, y1, l, EO1, C, D, X11, X12, cosa, sina)
-        # print('X', px, '\t', py)
-        R = math.sqrt((px-(Cx+X21*cosa))**2 + (py-(Cy+X21*sina))**2) # радиус касательной окружности
-        h = 2*(x-px-R)
+        px, py = PX(x, y0, y1, l, EO1, C, D, X11, X12, cosa, sina) # center of the tangent circle
+        R = math.sqrt((px-(Cx+X21*cosa))**2 + (py-(Cy+X21*sina))**2) # radius of the tangent circle
+        h = 2*(x-px-R)  # distance between the two tangent circles
         return sina, cosa, X12, X21, R, h
 
 
-      r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
-      r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
+      # find the homothetic center
       l = abs(y1-y0)
       EO1 = r1*l / (r0-r1)
       EO0 = EO1+l
       Cx = x
       Cy = y1+EO1
-      cosb = r1/EO1
+      cosb = r1/EO1 # angle between tangent rays
 
       alpha_max = math.asin(cosb)/math.pi*180
       if alpha is None:

@@ -94,7 +94,7 @@ class Bubble_World:
       print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />');
 
 
-    def put_liaison(self, t0, x0, y0, t1, x1, y1, h=None, auto=True, alpha=None):
+    def put_liaison(self, t0, x0, y0, t1, x1, y1, h=None, auto=True, alpha=None, tol=1e-4):
 
         r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
         r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
@@ -109,7 +109,7 @@ class Bubble_World:
         if h is None:
             h = 0.666*r1
         if abs(r0-r1)>1e-4:
-            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto)
+            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto, tol=tol)
         else:
             R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_equal(r0, x0, y0, y11, h)
 
@@ -145,7 +145,7 @@ class Bubble_World:
        return R, x+xx, y0+yy, 0,  2.0*(dy-yy), -2.0*xx
 
 
-    def put_liaison_diffr(self, r0, r1, x, y0, y1, alpha, h, auto=True):
+    def put_liaison_diffr(self, r0, r1, x, y0, y1, alpha, h, auto=True, tol=1e-4):
 
       '''
       There are 2 circles C0, C1 with radii r0!=r1 centered at the points (x,y0) and (x,y1).
@@ -160,7 +160,7 @@ class Bubble_World:
       (specifying the angle between the rays and the line connecting the centers)
       and thus find the tangent points and then R.
       However I could not find a closed expression connecting these values to h
-      so the right angle is found through 1D optimization.
+      so the right angle is found with numerical golden-rule search.
       '''
 
       def PX(y0, y1, l, EO1, B, C, sD, cosb, sinb):
@@ -193,17 +193,17 @@ class Bubble_World:
       Cx = x
       Cy = y1+EO1
 
+      # angle between the tangent ray and the line connecting the centers
+      sin_alpha_max = r1/EO1
+      alpha_max = math.asin(sin_alpha_max)
+
       if alpha is None:
-          # angle between the tangent ray and the line connecting the centers
-          sin_alpha_max = r1/EO1
-          alpha_max = math.asin(sin_alpha_max)
           alpha = 0.5*alpha_max
       else:
-          alpha *= math.pi/180.0
+          alpha = math.radians(alpha)
 
       if auto is True:
-          from scipy import optimize
-          alpha = optimize.fsolve(lambda x: get_coord(x)[-1]-h, alpha)
+          alpha = alpha_max * _gold(lambda x: (get_coord(x*alpha_max)[-1]-h)**2, tol, 0, (1-1e-5))
 
       sinb, cosb, X12, X21, R, hh = get_coord(alpha)
 
@@ -265,4 +265,31 @@ class Bubble_World:
             if xcanv is None: xcanv = xmax+rmean/2
             if ycanv is None: ycanv = ymax+rmean/2
         return xcanv, ycanv
+
+
+def _gold(f, eps, bra, ket):
+   phi = (math.sqrt(5.0)-1.0)*0.5
+   d   = ket-bra
+   x1  = ket-d*phi
+   x2  = bra+d*phi
+   y1  = f(x1)
+   y2  = f(x2)
+   for k in range(666):
+      c = (bra+ket)*0.5
+      if 0: print( f"{k:5d} a={bra:20.15f} b={ket:20.15f} c={c:20.15f} d={d:20.15f} y1={y1:+e} y2={y2:+e}" )
+      if d<eps: return c
+      if y1>y2:
+         bra = x1
+         x1  = x2
+         x2  = bra+(ket-bra)*phi
+         y1  = y2
+         y2  = f(x2)
+      else:
+         ket = x2
+         x2  = x1
+         x1  = ket-(ket-bra)*phi
+         y2  = y1
+         y1  = f(x1)
+      d = ket-bra
+   return c
 

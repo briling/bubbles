@@ -1,5 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="600">
   <defs>
+    <circle id='bubble0' cx='0' cy='0' r='70' fill='#ffffff' stroke='#ff0000' stroke-width='15'/> 
+    <circle id='bubble1' cx='0' cy='0' r='70' fill='#ffffff' stroke='#b51f1f' stroke-width='15'/> 
+    <circle id='bubble2' cx='0' cy='0' r='70' fill='#ffffff' stroke='#007480' stroke-width='15'/> 
+    <circle id='bubble3' cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/> 
+    <circle id='bubble4' cx='0' cy='0' r='70' fill='#ffffff' stroke='#00a79f' stroke-width='15'/> 
+    <circle id='bubble5' cx='0' cy='0' r='30' fill='#ffffff' stroke='#00a79f' stroke-width='12'/> 
+    <circle id='bubble6' cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/> 
+
     <linearGradient id="myGradient1.2" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#ff0000"/> <stop offset="70.0%" stop-color="#b51f1f"/> </linearGradient>
     <linearGradient id="myGradient1.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#ff0000"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
     <linearGradient id="myGradient3.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#007480"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
@@ -18,16 +26,8 @@
           stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
           stroke-miterlimit:4; stroke-dasharray:none
         }
-        </style>
+    </style>
   </defs>
-
-  <symbol id='bubble0'> <circle cx='0' cy='0' r='70' fill='#ffffff' stroke='#ff0000' stroke-width='15'/> </symbol>
-  <symbol id='bubble1'> <circle cx='0' cy='0' r='70' fill='#ffffff' stroke='#b51f1f' stroke-width='15'/> </symbol>
-  <symbol id='bubble2'> <circle cx='0' cy='0' r='70' fill='#ffffff' stroke='#007480' stroke-width='15'/> </symbol>
-  <symbol id='bubble3'> <circle cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/> </symbol>
-  <symbol id='bubble4'> <circle cx='0' cy='0' r='70' fill='#ffffff' stroke='#00a79f' stroke-width='15'/> </symbol>
-  <symbol id='bubble5'> <circle cx='0' cy='0' r='30' fill='#ffffff' stroke='#00a79f' stroke-width='12'/> </symbol>
-  <symbol id='bubble6'> <circle cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/> </symbol>
 
   <g transform="rotate(-225.0,250,250)"> <path d=" M 290.2608802153539 316.2216846983292 a 30.079576884944636, 30.079576884944636  0 0 0 0 51.404393711843966 h -80.52176043070776 a 30.079576884944636, 30.079576884944636  0 0 0 0 -51.404393711843966 z" fill="url('#myGradient1.2')" /> </g>
   <g transform="rotate(-225.0,250,250)"> <path d=" M 290.2608802153539 316.2216846983292 a 30.079576884944636, 30.079576884944636  0 0 0 0 51.404393711843966 h -80.52176043070776 a 30.079576884944636, 30.079576884944636  0 0 0 0 -51.404393711843966 z" fill="url('#myGradient1.2')" /> </g>

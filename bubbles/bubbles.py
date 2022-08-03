@@ -37,12 +37,12 @@ class Bubble_World:
 
     def print_def(self, dump=False, grad_offset=30.0, font_family='Latin Modern Sans', font_weight='normal'):
         print('  <defs>')
+        self.print_def_bubble(dump=dump)
+        print()
         self.print_def_gradient(dump=dump, offset=grad_offset)
         print()
         self.print_def_font(family=font_family, weight=font_weight)
         print('  </defs>')
-        print()
-        self.print_def_bubble(dump=dump)
         print()
 
     def print_def_bubble(self, dump=False):
@@ -56,10 +56,8 @@ class Bubble_World:
             bub = self.bubble[i]
             cf = self._colors[bub['fill']]
             cs = self._colors[bub['stroke']]
-            print(f"  <symbol id='bubble{str(i)}'> "
-                  f"<circle cx='0' cy='0' r='{bub['r']}' "
-                  f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/> "
-                  '</symbol>')
+            print(f"    <circle id='bubble{str(i)}' cx='0' cy='0' r='{bub['r']}' "
+                  f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/> ")
 
     def print_def_gradient(self, offset=30.0, dump=False):
 
@@ -89,7 +87,7 @@ class Bubble_World:
           stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
           stroke-miterlimit:4; stroke-dasharray:none
         {'}'}
-        </style>''')
+    </style>''')
 
     def put_bubble(self, t, x, y):
         print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />')

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="300">
+  <circle cx="100" cy="80" r="40" stroke="black" stroke-width="1" fill="white" />
+  <circle cx="100" cy="180" r="40" stroke="black" stroke-width="1" fill="white" />
+  <line x1="100" y1="80" x2="100" y2="180" style="stroke:rgb(255,0,0);stroke-width:1" />
+  <circle cx="152.5" cy="130.0" r="32.5" stroke="black" stroke-width="1" fill="white" />
+  <circle cx="47.5" cy="130.0" r="32.5" stroke="black" stroke-width="1" fill="white" />
+  <circle cx="128.9655172413793" cy="107.58620689655172" r="1" stroke="#00FFFF" stroke-width="1" fill="white" />
+  <circle cx="71.0344827586207" cy="107.58620689655172" r="1" stroke="#00FFFF" stroke-width="1" fill="white" />
+  <circle cx="128.9655172413793" cy="152.41379310344828" r="1" stroke="#00FFFF" stroke-width="1" fill="white" />
+  <circle cx="71.0344827586207" cy="152.41379310344828" r="1" stroke="#00FFFF" stroke-width="1" fill="white" />
+
+  <circle cx="320" cy="80" r="40" stroke="black" stroke-width="1" fill="white" />
+  <circle cx="320" cy="180" r="20" stroke="black" stroke-width="1" fill="white" />
+  <line x1="320" y1="80" x2="320" y2="180" style="stroke:rgb(255,0,0);stroke-width:1" />
+  <circle cx="320" cy="280.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="339.59591794226543" cy="184.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="300.40408205773457" cy="184.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="359.19183588453086" cy="88.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="280.80816411546914" cy="88.0" r="1" stroke="red" stroke-width="1" fill="white" />
+  <line x1="320" y1="280.0" x2="380.0" y2="-13.938769133981339" style="stroke:grey;stroke-width:1;stroke-opacity:0.3" />
+  <line x1="320" y1="280.0" x2="260.0" y2="-13.938769133981339" style="stroke:grey;stroke-width:1;stroke-opacity:0.5" />
+  <line x1="320" y1="280.0" x2="365.1335178206083" y2="-16.585511394499576" style="stroke:grey;stroke-width:1" />
+  <line x1="320" y1="280.0" x2="274.8664821793917" y2="-16.585511394499576" style="stroke:grey;stroke-width:1" />
+  <circle cx="307.109308053719" cy="195.29150290671538" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="332.890691946281" cy="195.29150290671538" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="303.14414202659685" cy="169.23524027298055" r="1" stroke="cyan" stroke-width="1" fill="white" />
+  <circle cx="336.85585797340315" cy="169.23524027298055" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="294.21861610743804" cy="110.58300581343079" r="1" stroke="cyan" stroke-width="1" fill="white" />
+  <circle cx="345.78138389256196" cy="110.58300581343079" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="286.2882840531937" cy="58.470480545961095" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="353.7117159468063" cy="58.470480545961095" r="1" stroke="red" stroke-width="1" fill="white" />
+  <circle cx="265.2018727238254" cy="145.00393664033948" r="45.01968320169814" stroke="grey" opacity="0.5" stroke-width="1" fill="white" />
+  <g id="liason0" fill="red" opacity="0.1" > <path d="
+    M 303.14414202659685 169.23524027298055
+    A 45.01968320169814,  45.01968320169814  0 0 0 294.21861610743804 110.58300581343079
+    A 40, 40 0 0 0 345.78138389256196 110.58300581343079
+    A 45.01968320169814,  45.01968320169814  0 0 0 336.85585797340315 169.23524027298055
+    A 20, 20 0 0 0 303.14414202659685 169.23524027298055
+  "/></g>
+  <g id="liason1" fill="blue" opacity="0.1" > <path d="
+    M 303.14414202659685 169.23524027298055
+    A 45.01968320169814,  45.01968320169814  0 0 0 294.21861610743804 110.58300581343079
+    H 345.78138389256196
+    A 45.01968320169814,  45.01968320169814  0 0 0 336.85585797340315 169.23524027298055
+    z
+  "/></g>
+
+</svg>
+

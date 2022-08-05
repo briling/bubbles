@@ -1,43 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500">
   <defs>
-    <g id="bubble0"> <circle cx="0" cy="0" r="25.000000" fill="#ffaaff" stroke="#990000" stroke-width="10.000000"/></g>
-    <g id="bubble1"> <circle cx="0" cy="0" r="25.000000" fill="#aaffff" stroke="#000099" stroke-width="10.000000"/></g>
-    <g id="bubble2"> <circle cx="0" cy="0" r="25.000000" fill="#ffaaff" stroke="#990099" stroke-width="5.000000"/></g>
+    <circle id='bubble0' cx='0' cy='0' r='25' fill='#ffaaff' stroke='#990000' stroke-width='10'/>
+    <circle id='bubble1' cx='0' cy='0' r='25' fill='#aaffff' stroke='#000099' stroke-width='10'/>
+    <circle id='bubble2' cx='0' cy='0' r='25' fill='#ffaaff' stroke='#990099' stroke-width='5'/>
 
-    <linearGradient id="myGradient0.0" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
-    <linearGradient id="myGradient0.1" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
-    <linearGradient id="myGradient0.2" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990000" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
-    <linearGradient id="myGradient1.0" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
-    <linearGradient id="myGradient1.1" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
-    <linearGradient id="myGradient1.2" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#000099" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
-    <linearGradient id="myGradient2.0" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#990000" />        </linearGradient>
-    <linearGradient id="myGradient2.1" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#000099" />        </linearGradient>
-    <linearGradient id="myGradient2.2" x1="0" x2="0" y1="0" y2="1">        <stop offset="30%" stop-color="#990099" />        <stop offset="70%" stop-color="#990099" />        </linearGradient>
+    <linearGradient id="myGradient1.1" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#990000"/> <stop offset="70.0%" stop-color="#990000"/> </linearGradient>
+    <linearGradient id="myGradient1.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#990000"/> <stop offset="70.0%" stop-color="#000099"/> </linearGradient>
+    <linearGradient id="myGradient1.4" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#990000"/> <stop offset="70.0%" stop-color="#990099"/> </linearGradient>
+    <linearGradient id="myGradient3.1" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#000099"/> <stop offset="70.0%" stop-color="#990000"/> </linearGradient>
+    <linearGradient id="myGradient3.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#000099"/> <stop offset="70.0%" stop-color="#000099"/> </linearGradient>
+    <linearGradient id="myGradient3.4" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#000099"/> <stop offset="70.0%" stop-color="#990099"/> </linearGradient>
+    <linearGradient id="myGradient4.1" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#990099"/> <stop offset="70.0%" stop-color="#990000"/> </linearGradient>
+    <linearGradient id="myGradient4.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#990099"/> <stop offset="70.0%" stop-color="#000099"/> </linearGradient>
+    <linearGradient id="myGradient4.4" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#990099"/> <stop offset="70.0%" stop-color="#990099"/> </linearGradient>
 
     <style>
         .mytext {
+          font-style:normal; font-variant:normal; font-weight:bold; font-stretch:normal;
           line-height:125%;
-          font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;
-          font-family:"Latin Modern Sans";-inkscape-font-specification:"Latin Modern Sans";
-          text-align:center;text-anchor:middle;
+          font-family:"Latin Modern Sans"; -inkscape-font-specification:"Latin Modern Sans";
+          font-variant-ligatures:normal; font-variant-caps:normal; font-variant-numeric:normal; font-feature-settings:normal;
+          text-align:start; letter-spacing:0px; word-spacing:0px; writing-mode:lr-tb; text-anchor:middle;
           fill-opacity:1; stroke:#FFFFFF;
           stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
           stroke-miterlimit:4; stroke-dasharray:none
         }
-          </style>
+    </style>
   </defs>
 
-
-          <g transform="rotate(-0.0,50,100)">
-            <path d=" 
-            M 35.95228825920576 176.35868457873516 
-            A 28.98201941632472,  28.98201941632472  0 0 0 35.3247764445028 126.16558452617437  
-            h 29.35044711099439 
-            A 28.98201941632472,  28.98201941632472  0 0 0 64.04771174079424 176.35868457873516  
-            z" 
-            fill="url('#myGradient0.2')" 
-            />
-          </g>
+  <g transform="rotate(-0.0,50,100)"> <path d=" M 35.95228825920576 176.35868457873516 a 28.98201941632512, 28.98201941632512  0 0 0 -0.627511814702959 -50.19310005256077 h 29.3504471109944 a 28.98201941632512, 28.98201941632512  0 0 0 -0.627511814702959 50.19310005256077 z" fill="url('#myGradient1.4')" /> </g>
   <use x="50" y="100" xlink:href="#bubble0" />
   <use x="50" y="200" xlink:href="#bubble2" />
   <text x="50" y="100" class="mytext" font-size="12px" fill="#000000">
@@ -50,17 +41,7 @@
     <tspan x="50" dy="1em"> abc </tspan>
     <tspan x="50" dy="1em"> ,./ </tspan>
   </text>
-
-          <g transform="rotate(90.0,250,250)">
-            <path d=" 
-            M 224.78827636033623 339.01733224041527 
-            A 90.24814666837607,  90.24814666837607  0 0 0 223.06811276089235 263.2164083525074  
-            h 53.86377447821533 
-            A 90.24814666837607,  90.24814666837607  0 0 0 275.2117236396638 339.01733224041527  
-            z" 
-            fill="url('#myGradient0.2')" 
-            />
-          </g>
+  <g transform="rotate(-90.0,150,250)"> <path d=" M 123.06811276089215 336.78359164749963 a 90.2481466684331, 90.2481466684331  0 0 0 1.7201635994442164 -75.8009238879215 h 50.42344727932726 a 90.2481466684331, 90.2481466684331  0 0 0 1.7201635994442164 75.8009238879215 z" fill="url('#myGradient4.1')" /> </g>
   <use x="250" y="250" xlink:href="#bubble0" />
   <use x="150" y="250" xlink:href="#bubble2" />
   <text x="250" y="250" class="mytext" font-size="12px" fill="#000000">
@@ -69,78 +50,22 @@
   <text x="150" y="250" class="mytext" font-size="6px" fill="#000000">
     <tspan x="150" dy="0.25em"> 123 </tspan>
   </text>
-
-          <g transform="rotate(-180.0,400,250)">
-            <path d=" 
-            M 385.9522882592058 326.35868457873516 
-            A 28.98201941632431,  28.98201941632431  0 0 0 385.3247764445028 276.16558452617437  
-            h 29.35044711099439 
-            A 28.98201941632431,  28.98201941632431  0 0 0 414.0477117407942 326.35868457873516  
-            z" 
-            fill="url('#myGradient0.2')" 
-            />
-          </g>
+  <g transform="rotate(-180.0,400,250)"> <path d=" M 385.9522882592058 326.35868457873516 a 28.98201941632512, 28.98201941632512  0 0 0 -0.627511814702959 -50.19310005256077 h 29.3504471109944 a 28.98201941632512, 28.98201941632512  0 0 0 -0.627511814702959 50.19310005256077 z" fill="url('#myGradient1.4')" /> </g>
   <use x="400" y="250" xlink:href="#bubble0" />
   <use x="400" y="150" xlink:href="#bubble2" />
-
-          <g transform="rotate(-63.43494882292201,200,150)">
-            <path d=" 
-            M 182.53055179602944 240.56502842316695 
-            A 42.81106740610702,  42.81106740610702  0 0 0 181.59677052142246 173.69221696589125  
-            h 36.80645895715508 
-            A 42.81106740610702,  42.81106740610702  0 0 0 217.46944820397056 240.56502842316695  
-            z" 
-            fill="url('#myGradient0.2')" 
-            />
-          </g>
+  <g transform="rotate(-243.43494882292202,300,200)"> <path d=" M 281.59677052142257 288.11118190909815 a 42.811067406107355, 42.811067406107355  0 0 0 0.9337812746069817 -66.8728114572759 h 34.93889640794091 a 42.811067406107355, 42.811067406107355  0 0 0 0.9337812746069817 66.8728114572759 z" fill="url('#myGradient4.1')" /> </g>
   <use x="300" y="200" xlink:href="#bubble2" />
   <use x="200" y="150" xlink:href="#bubble0" />
- <g transform="rotate(-0.0,50,300)">
-        <path d=" 
-        M 71.71700276799743 320.69714450775257 
-        A 42.473765617191404, 42.473765617191404  0 0 0 71.71700276799743 379.30285549224743  
-        h -43.43400553599485
-        A 42.473765617191404, 42.473765617191404  0 0 0 28.282997232002575 320.69714450775257  
-        z"
-        fill="url('#myGradient0.1')" 
-        />
-      </g>
+  <g transform="rotate(-0.0,50,300)"> <path d=" M 71.71700276799743 320.69714450775257 a 42.473765617191404, 42.473765617191404  0 0 0 0 58.60571098449486 h -43.43400553599485 a 42.473765617191404, 42.473765617191404  0 0 0 0 -58.60571098449486 z" fill="url('#myGradient1.3')" /> </g>
   <use x="50" y="300" xlink:href="#bubble0" />
   <use x="50" y="400" xlink:href="#bubble1" />
- <g transform="rotate(-90.0,150,450)">
-        <path d=" 
-        M 171.71700276799743 470.69714450775257 
-        A 42.473765617191404, 42.473765617191404  0 0 0 171.71700276799743 529.3028554922474  
-        h -43.43400553599485
-        A 42.473765617191404, 42.473765617191404  0 0 0 128.28299723200257 470.69714450775257  
-        z"
-        fill="url('#myGradient1.0')" 
-        />
-      </g>
+  <g transform="rotate(-90.0,150,450)"> <path d=" M 171.71700276799743 470.69714450775257 a 42.473765617191404, 42.473765617191404  0 0 0 0 58.60571098449486 h -43.43400553599485 a 42.473765617191404, 42.473765617191404  0 0 0 0 -58.60571098449486 z" fill="url('#myGradient3.1')" /> </g>
   <use x="250" y="450" xlink:href="#bubble0" />
   <use x="150" y="450" xlink:href="#bubble1" />
- <g transform="rotate(-180.0,400,450)">
-        <path d=" 
-        M 415.67600487210717 475.57856272838 
-        A 28.642857142857142, 28.642857142857142  0 0 0 415.67600487210717 524.42143727162  
-        h -31.352009744214374
-        A 28.642857142857142, 28.642857142857142  0 0 0 384.32399512789283 475.57856272838  
-        z"
-        fill="url('#myGradient0.1')" 
-        />
-      </g>
+  <g transform="rotate(-180.0,400,450)"> <path d=" M 415.67600487210717 475.57856272838 a 28.642857142857142, 28.642857142857142  0 0 0 0 48.84287454323995 h -31.352009744214374 a 28.642857142857142, 28.642857142857142  0 0 0 0 -48.84287454323995 z" fill="url('#myGradient1.3')" /> </g>
   <use x="400" y="450" xlink:href="#bubble0" />
   <use x="400" y="350" xlink:href="#bubble1" />
- <g transform="rotate(-243.43494882292202,300,400)">
-        <path d=" 
-        M 326.45889792231253 414.1395445731694 
-        A 88.6071428571429, 88.6071428571429  0 0 0 326.45889792231253 497.6638543018201  
-        h -52.91779584462512
-        A 88.6071428571429, 88.6071428571429  0 0 0 273.54110207768747 414.1395445731694  
-        z"
-        fill="url('#myGradient1.0')" 
-        />
-      </g>
+  <g transform="rotate(-243.43494882292202,300,400)"> <path d=" M 326.45889792231253 414.1395445731694 a 88.6071428571429, 88.6071428571429  0 0 0 0 83.5243097286507 h -52.91779584462512 a 88.6071428571429, 88.6071428571429  0 0 0 0 -83.5243097286507 z" fill="url('#myGradient3.1')" /> </g>
   <use x="300" y="400" xlink:href="#bubble1" />
   <use x="200" y="350" xlink:href="#bubble0" />
 </svg>

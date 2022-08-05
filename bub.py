@@ -50,38 +50,38 @@ x53 = x42 + 100
 
 
 
-bubble_world.add_bubble(0, x0, y0)
-bubble_world.add_bubble(1, x1, y1)
-bubble_world.add_bubble(2, x11, y11)
-bubble_world.add_bubble(1, x11, y1)
-bubble_world.add_bubble(1, x1, y11)
+bubble_world.add_bubble((0, x0, y0))
+bubble_world.add_bubble((1, x1, y1))
+bubble_world.add_bubble((2, x11, y11))
+bubble_world.add_bubble((1, x11, y1))
+bubble_world.add_bubble((1, x1, y11))
 
-bubble_world.add_bubble(4, x3, y3)
-bubble_world.add_bubble(3, x32, y32)
-bubble_world.add_bubble(3, x33, y33)
+bubble_world.add_bubble((4, x3, y3))
+bubble_world.add_bubble((3, x32, y32))
+bubble_world.add_bubble((3, x33, y33))
 
-bubble_world.add_bubble(5, x42, y42)
-bubble_world.add_bubble(5, x43, y43)
+bubble_world.add_bubble((5, x42, y42))
+bubble_world.add_bubble((5, x43, y43))
 
-bubble_world.add_bubble(6, x52, y52)
-bubble_world.add_bubble(6, x53, y53)
+bubble_world.add_bubble((6, x52, y52))
+bubble_world.add_bubble((6, x53, y53))
 
 
-bubble_world.add_liaison(0,x0,y0,1,x1,y1)
-bubble_world.add_liaison(0,x0,y0,1,x1,y1)
-bubble_world.add_liaison(0,x0,y0,1,x11,y1)
-bubble_world.add_liaison(0,x0,y0,1,x1,y11)
-bubble_world.add_liaison(0,x0,y0,2,x11,y11)
+bubble_world.add_liaison((0,x0,y0),(1,x1,y1))
+bubble_world.add_liaison((0,x0,y0),(1,x1,y1))
+bubble_world.add_liaison((0,x0,y0),(1,x11,y1))
+bubble_world.add_liaison((0,x0,y0),(1,x1,y11))
+bubble_world.add_liaison((0,x0,y0),(2,x11,y11))
 
-bubble_world.add_liaison(2,x11,y11,4,x3,y3)
-bubble_world.add_liaison(2,x11,y11,3,x32,y32,h=62)
-bubble_world.add_liaison(2,x11,y11,3,x33,y33,h=62)
+bubble_world.add_liaison((2,x11,y11),(4,x3,y3))
+bubble_world.add_liaison((2,x11,y11),(3,x32,y32),h=62)
+bubble_world.add_liaison((2,x11,y11),(3,x33,y33),h=62)
 
-bubble_world.add_liaison(4,x3,y3,5,x42,y42, h=13.5)
-bubble_world.add_liaison(4,x3,y3,5,x43,y43, h=13.5)
+bubble_world.add_liaison((4,x3,y3),(5,x42,y42), h=13.5)
+bubble_world.add_liaison((4,x3,y3),(5,x43,y43), h=13.5)
 
-bubble_world.add_liaison(5,x42,y42,6,x52,y52, h=10.5)
-bubble_world.add_liaison(5,x42,y42,6,x53,y53, h=10.5)
+bubble_world.add_liaison((5,x42,y42),(6,x52,y52), h=10.5)
+bubble_world.add_liaison((5,x42,y42),(6,x53,y53), h=10.5)
 
 
 bubble_world.add_text(x0, y0,  ['QML', 'representations'], fs=14, fc=0x000000)

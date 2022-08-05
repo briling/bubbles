@@ -48,7 +48,7 @@ class Bubble_World:
     def print_def_bubble(self, dump=False):
 
         if dump is True:
-            idx = set([a[0] for a,k in self._bubbles])
+            idx = set([a[0][0] for a,k in self._bubbles])
         else:
             idx = list(self.bubble.keys())
 
@@ -57,14 +57,14 @@ class Bubble_World:
             cf = self._colors[bub['fill']]
             cs = self._colors[bub['stroke']]
             print(f"    <circle id='bubble{str(i)}' cx='0' cy='0' r='{bub['r']}' "
-                  f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/> ")
+                  f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/>")
 
     def print_def_gradient(self, offset=30.0, dump=False):
 
         if dump is True:
-            idx = [(self.bubble[a[0]]['stroke'], self.bubble[a[3]]['stroke']) for [a,k] in self._liaisons]
+            idx = [(self.bubble[a[0][0]]['stroke'], self.bubble[a[1][0]]['stroke']) for [a,k] in self._liaisons]
         else:
-            idx = [(self.bubble[i   ]['stroke'], self.bubble[j   ]['stroke']) for i in self.bubble.keys() for j in self.bubble.keys()]
+            idx = [(self.bubble[i      ]['stroke'], self.bubble[j      ]['stroke']) for i in self.bubble.keys() for j in self.bubble.keys()]
 
         for i,j in sorted(set(idx)):
             coli = self._colors[i]
@@ -89,10 +89,13 @@ class Bubble_World:
         {'}'}
     </style>''')
 
-    def put_bubble(self, t, x, y):
+    def put_bubble(self, a):
+        t, x, y = a
         print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />')
 
-    def put_liaison(self, t0, x0, y0, t1, x1, y1, h=None, auto=True, alpha=None, tol=1e-4):
+    def put_liaison(self, a0, a1, h=None, auto=True, alpha=None, tol=1e-4):
+        t0, x0, y0 = a0
+        t1, x1, y1 = a1
         r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
         r1 = self.bubble[t1]['r']+self.bubble[t1]['stroke_w']/2
         col0 = self.bubble[t0]['stroke']

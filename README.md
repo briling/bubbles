@@ -9,7 +9,20 @@ and now you can!
 ![example](bub.svg)
 
 
+## Usage
+...
 
-TODO:
-* good readme
-* real package
+
+## Examples
+...
+
+
+## Installation
+```
+pip install git+https://github.com/briling/bubbles.git
+```
+
+## TODO
+* Good README
+* Real package
+* Templates

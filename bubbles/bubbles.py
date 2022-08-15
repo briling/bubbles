@@ -251,7 +251,8 @@ class Bubble_World:
         if xcanv is None or ycanv is None:
             xmax = ymax = 0
             rmean = 0
-            for t,x,y in self._bubbles:
+            for [a,k] in self._bubbles:
+                t,x,y = a[0]
                 r = self.bubble[t]['r']+self.bubble[t]['stroke_w']/2
                 xmax = max(xmax, x+r)
                 ymax = max(ymax, y+r)

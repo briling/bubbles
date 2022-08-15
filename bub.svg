@@ -1,19 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="600">
   <defs>
-    <circle id='bubble0' cx='0' cy='0' r='70' fill='#ffffff' stroke='#ff0000' stroke-width='15'/> 
-    <circle id='bubble1' cx='0' cy='0' r='70' fill='#ffffff' stroke='#b51f1f' stroke-width='15'/> 
-    <circle id='bubble2' cx='0' cy='0' r='70' fill='#ffffff' stroke='#007480' stroke-width='15'/> 
-    <circle id='bubble3' cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/> 
-    <circle id='bubble4' cx='0' cy='0' r='70' fill='#ffffff' stroke='#00a79f' stroke-width='15'/> 
-    <circle id='bubble5' cx='0' cy='0' r='30' fill='#ffffff' stroke='#00a79f' stroke-width='12'/> 
-    <circle id='bubble6' cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/> 
+    <circle id='bubble0' cx='0' cy='0' r='70' fill='#ffffff' stroke='#ff0000' stroke-width='15'/>
+    <circle id='bubble1' cx='0' cy='0' r='70' fill='#ffffff' stroke='#b51f1f' stroke-width='15'/>
+    <circle id='bubble2' cx='0' cy='0' r='70' fill='#ffffff' stroke='#007480' stroke-width='15'/>
+    <circle id='bubble3' cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/>
+    <circle id='bubble4' cx='0' cy='0' r='70' fill='#ffffff' stroke='#00a79f' stroke-width='15'/>
+    <circle id='bubble5' cx='0' cy='0' r='30' fill='#ffffff' stroke='#00a79f' stroke-width='12'/>
+    <circle id='bubble6' cx='0' cy='0' r='40' fill='#ffffff' stroke='#007480' stroke-width='10'/>
 
     <linearGradient id="myGradient1.2" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#ff0000"/> <stop offset="70.0%" stop-color="#b51f1f"/> </linearGradient>
     <linearGradient id="myGradient1.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#ff0000"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
     <linearGradient id="myGradient3.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#007480"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
-    <linearGradient id="myGradient3.4" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#007480"/> <stop offset="70.0%" stop-color="#00a79f"/> </linearGradient>
-    <linearGradient id="myGradient4.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#00a79f"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
     <linearGradient id="myGradient4.4" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#00a79f"/> <stop offset="70.0%" stop-color="#00a79f"/> </linearGradient>
+    <linearGradient id="myGradient4.3" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#00a79f"/> <stop offset="70.0%" stop-color="#007480"/> </linearGradient>
+    <linearGradient id="myGradient3.4" x1="0" x2="0" y1="0" y2="1"><stop offset="30.0%"     stop-color="#007480"/> <stop offset="70.0%" stop-color="#00a79f"/> </linearGradient>
 
     <style>
         .mytext {

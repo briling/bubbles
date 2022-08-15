@@ -52,7 +52,7 @@ class Bubble_World:
         else:
             idx = list(self.bubble.keys())
 
-        for i in sorted(idx):
+        for i in idx:
             bub = self.bubble[i]
             cf = self._colors[bub['fill']]
             cs = self._colors[bub['stroke']]
@@ -66,7 +66,7 @@ class Bubble_World:
         else:
             idx = [(self.bubble[i      ]['stroke'], self.bubble[j      ]['stroke']) for i in self.bubble.keys() for j in self.bubble.keys()]
 
-        for i,j in sorted(set(idx)):
+        for i,j in set(idx):
             coli = self._colors[i]
             colj = self._colors[j]
             print(f'    <linearGradient id="myGradient{i}.{j}" x1="0" x2="0" y1="0" y2="1">'

@@ -93,6 +93,24 @@ class Bubble_World:
         t, x, y = a
         print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />')
 
+    def liaison_path(self, r0, r1, x0, y0, y11, alpha, h, auto, tol):
+        if h is None:
+            h = 0.666*r1
+        if abs(r0-r1) > 1e-4:
+            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto, tol=tol)
+        else:
+            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_equal(r0, x0, y0, y11, h)
+        return f'M {dx0} {dy0} '\
+               f'a {R}, {R}  0 0 0 {dx1} {+dy1} '\
+               f'h {dx2} '\
+               f'a {R}, {R}  0 0 0 {dx1} {-dy1} '\
+               f'z'
+
+    def liaison_angle(self, x0, x1, y0, y1):
+        angle = math.degrees(math.pi*0.5 - math.atan2(y1-y0, x1-x0))
+        y11 = y0 + math.hypot(x0-x1, y0-y1)
+        return angle, y11
+
     def put_liaison(self, a0, a1, h=None, auto=True, alpha=None, tol=1e-4):
         t0, x0, y0 = a0
         t1, x1, y1 = a1
@@ -102,24 +120,12 @@ class Bubble_World:
         col1 = self.bubble[t1]['stroke']
 
         # virtually align the liaison with the y-axis
-        angle = math.pi/2 - math.atan2(y1-y0, x1-x0)
-        l   = math.hypot(x0-x1, y0-y1)
-        y11 = y0+l
+        angle, y11 = self.liaison_angle(x0, x1, y0, y1)
+        path = self.liaison_path(r0, r1, x0, y0, y11, alpha, h, auto, tol)
 
-        if h is None:
-            h = 0.666*r1
-        if abs(r0-r1) > 1e-4:
-            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto, tol=tol)
-        else:
-            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_equal(r0, x0, y0, y11, h)
-
-        print(f'  <g transform="rotate({-angle/math.pi*180},{x0},{y0})"> <path d=" '
-              f'M {dx0} {dy0} '
-              f'a {R}, {R}  0 0 0 {dx1} {+dy1} '
-              f'h {dx2} '
-              f'a {R}, {R}  0 0 0 {dx1} {-dy1} '
-              f'z" '
-              f'fill="url(\'#myGradient{col0}.{col1}\')" /> </g>')
+        print(f'  <g transform="rotate({-angle},{x0},{y0})"> <path d=" '+\
+              path+\
+              f'" fill="url(\'#myGradient{col0}.{col1}\')" /> </g>')
 
     def put_liaison_equal(self, r0, x, y0, y1, h):
 

@@ -1,0 +1,12 @@
+<inkscape-extension>
+  <_name>Bubble bond</_name>
+  <id>briling.bubblebond</id>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <effect>
+    <object-type>all</object-type>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">bubblebond.py</command>
+  </script>
+  <options silent="true" />
+</inkscape-extension>

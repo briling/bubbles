@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-# TODO:
-# 5) put it behind the circles
-
 import math
 import inkex
 from inkex.elements import Group, PathElement
@@ -13,10 +10,10 @@ class BubbleBond(inkex.Effect):
 
     def add_arguments(self, pars):
         pars.add_argument('--tab')
-        pars.add_argument('--width',   type=int,   default=25,    dest='width'  )
-        pars.add_argument('--offset1', type=int,   default=0,     dest='offset1')
-        pars.add_argument('--offset2', type=int,   default=100,   dest='offset2')
-        pars.add_argument('--back',    type=bool,  default=False, dest='back'   )
+        pars.add_argument('--width',   type=int,           default=25,    dest='width'  )
+        pars.add_argument('--offset1', type=int,           default=0,     dest='offset1')
+        pars.add_argument('--offset2', type=int,           default=100,   dest='offset2')
+        pars.add_argument('--back',    type=inkex.Boolean, default=False, dest='back'   )
 
     # thanks to https://github.com/r-forge/svgmapping/tree/master/inkscape/extensions
 
@@ -117,6 +114,12 @@ class BubbleBond(inkex.Effect):
 
         grad = self.make_gradient(offset, st0['stroke'], st1['stroke'])
         self.make_liaison(r0, r1, x0, x1, y0, y1, h, grad)
+
+        if back is True:
+            # don't understand why it works so thanks to extensions/restack.py
+            parent = self.svg.get_current_layer()
+            parent.append(c0)
+            parent.append(c1)
 
         return
 

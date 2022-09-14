@@ -17,6 +17,3 @@ Select two bubbles you want to bond
 and use `Extensions > Bubble bond`. 
 
 ![screencast](screencast.gif)
-
-## TODO
-* Fix the z-order

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # TODO:
-# 5) behind the circles
+# 5) put it behind the circles
 
 import math
 import inkex
@@ -18,57 +18,41 @@ class BubbleBond(inkex.Effect):
         pars.add_argument('--offset2', type=int,   default=100,   dest='offset2')
         pars.add_argument('--back',    type=bool,  default=False, dest='back'   )
 
-    def checkGradient(self, gid):
+    # thanks to https://github.com/r-forge/svgmapping/tree/master/inkscape/extensions
+
+    def check_gradient(self, name):
         try:
-            retval = self.document.xpath('//svg:linearGradient[@id="%s"]' % gid, namespaces=inkex.NSS)[0]
+            self.document.xpath('//svg:linearGradient[@id="%s"]' % name, namespaces=inkex.NSS)[0]
         except:
             return False
         return True
 
-    def addLinearGradient(self, colors, gid):
+    def add_gradient(self, colors, offsets, name):
         defs = self.svg.getElement('/svg:svg//svg:defs')
         if defs is None:
             defs = etree.SubElement(self.document.getroot(),inkex.addNS('defs','svg'))
         gradient = etree.SubElement(defs,inkex.addNS('linearGradient','svg'))
-        gradient.set('id', gid)
-        for (off,color) in colors:
-            lg_stop = etree.Element(inkex.addNS('stop','svg'))
-            lg_stop.set('style', str(inkex.Style(color)))
-            lg_stop.set('offset', '%f' % off)
-            gradient.append(lg_stop)
+        gradient.set('id', name)
+        for (offset, color) in zip(offsets, colors):
+            stop = etree.Element(inkex.addNS('stop','svg'))
+            stop.set('style', str(inkex.Style(color)))
+            stop.set('offset', f'{offset}')
+            gradient.append(stop)
         gradient.set('x1', '0')
         gradient.set('y1', '0')
         gradient.set('x2', '0')
         gradient.set('y2', '1')
         defs.append(gradient)
 
-    def addPath(self, group, style, d, nodetypes=None, label=None):
-        path = etree.Element(inkex.addNS('path','svg'))
-        path.set('style', str(inkex.Style(style)))
-        path.set('d', d)
-        if not label==None:
-            path.set(inkex.addNS('label','inkscape'),label)
-        if not nodetypes==None:
-            path.set(inkex.addNS('nodetypes', 'sodipodi'), nodetypes)
-        group.append(path)
-
-
-
     def make_liaison(self, r0, r1, x0, x1, y0, y1, h, gradient):
         BW = bubbles.Bubble_World()
         angle, y11 = BW.liaison_angle(x0, x1, y0, y1)
         path       = BW.liaison_path(r0, r1, x0, y0, y11, None, h, True, 1e-4)
-        my_shape = PathElement()
-        my_shape.path = path
-        style = {   'stroke'        : 'none',
-                    'stroke-width'  : '0',
-                    'fill'          : gradient,
-                }
-        my_shape.style = str(inkex.styles.Style(style))
-
-        my_shape.transform.add_rotate(-angle, x0, y0)
-        layer = self.svg.add(Group.new('my_label', is_layer=True))
-        layer.append(my_shape)
+        liaison = PathElement()
+        liaison.path  = path
+        liaison.style = str(inkex.styles.Style({'stroke':'none', 'stroke-width':'0', 'fill':gradient}))
+        liaison.transform.add_rotate(-angle, x0, y0)
+        self.svg.get_current_layer().append(liaison)
         return
 
     def get_radius(self, c0, st0):
@@ -91,13 +75,13 @@ class BubbleBond(inkex.Effect):
         return st0_dict
 
     def make_gradient(self, offset, str0, str1):
-        c0 = (offset[0], { 'stop-color' : str0 , 'stop-opacity' : '1' })
-        c1 = (offset[1], { 'stop-color' : str1 , 'stop-opacity' : '1' })
+        c0 = { 'stop-color' : str0 , 'stop-opacity' : '1' }
+        c1 = { 'stop-color' : str1 , 'stop-opacity' : '1' }
         gi = 0
         while True:
             gname = f'BubbleBondLinearGradient{gi}'
-            if not self.checkGradient(gname):
-                self.addLinearGradient((c0, c1), gname)
+            if not self.check_gradient(gname):
+                self.add_gradient((c0, c1), offset, gname)
                 break
             gi+=1
         return 'url(#'+gname+')'
@@ -106,7 +90,7 @@ class BubbleBond(inkex.Effect):
 
         #inkex.utils.debug("yo")
         width  = 1e-2*self.options.width
-        offset = [1e-2*self.options.offset1,1e-2*self.options.offset2]
+        offset = [1e-2*self.options.offset1, 1e-2*self.options.offset2]
         back   = self.options.back
 
         # check the number of selected objects
@@ -138,10 +122,3 @@ class BubbleBond(inkex.Effect):
 
 bb = BubbleBond()
 bb.run()
-
-
-        #svg = self.document.getroot()
-        #parent = self.svg.get_current_layer()
-        #self.addPath(svg, style,
-        #             'm 439.7786,473.74954 20.24066,0 -0.0387,-267.40595 -20.28271,0 z',
-        #             'ccccc',label=label)

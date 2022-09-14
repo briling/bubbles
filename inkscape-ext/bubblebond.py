@@ -85,7 +85,6 @@ class BubbleBond(inkex.Effect):
 
     def effect(self):
 
-        #inkex.utils.debug("yo")
         width  = 1e-2*self.options.width
         offset = [1e-2*self.options.offset1, 1e-2*self.options.offset2]
         back   = self.options.back
@@ -93,8 +92,7 @@ class BubbleBond(inkex.Effect):
         # check the number of selected objects
         idx = self.options.ids
         if len(idx) != 2:
-            inkex.utils.debug('Select two circles!')
-            return
+            raise inkex.AbortExtension("Select exactly 2 circles.")
         c0, c1 = self.svg.selected[idx[0]], self.svg.selected[idx[1]]
         st0 = self.get_style_dict(c0)
         st1 = self.get_style_dict(c1)
@@ -103,8 +101,7 @@ class BubbleBond(inkex.Effect):
         r0 = self.get_radius(c0, st0)
         r1 = self.get_radius(c1, st1)
         if r0 is None or r1 is None:
-            inkex.utils.debug('Select two circles!')
-            return
+            raise inkex.AbortExtension("These are not circles.")
         h = width * 2.0*min(r0, r1)
 
         x0 = float(c0.attrib['cx'])

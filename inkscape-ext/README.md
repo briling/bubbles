@@ -1,8 +1,12 @@
-# Bubble bond inkscape extension
+# Bubble bond Inkscape extension
 
 This is an [`inkscape`](https://inkscape.org/) extension 
 that uses the [`bubbles`](../) library
 to draw bonds between bubbles.
+
+## Requirements (under construction)
+
+Should work with `python3` and `inkscape>=1` (I have `python3.6` and `inkscape 1.0.1`).
 
 ## Installation
 
@@ -14,6 +18,6 @@ in `~/.config/inkscape/extensions/`
 ## Usage
 
 Select two bubbles you want to bond 
-and use `Extensions > Bubble bond`. 
+and go to `Extensions > Bubble bond`. 
 
 ![screencast](screencast.gif)

@@ -12,6 +12,8 @@ and now you can!
 ## Usage
 ...
 
+There is also an [inkscape extension](inkscape-ext/)!
+
 
 ## Examples
 ...

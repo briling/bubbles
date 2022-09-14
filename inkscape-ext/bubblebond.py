@@ -1,26 +1,23 @@
 #!/usr/bin/env python
 
 # TODO:
-# 4) width
 # 5) behind the circles
-
-from simplestyle import *
-from simpletransform import *
 
 import math
 import inkex
 from inkex.elements import Group, PathElement
-import bubbles
 from lxml import etree
+import bubbles
 
 class BubbleBond(inkex.Effect):
 
-    def __init__(self):
-        inkex.Effect.__init__(self)
-        self.arg_parser.add_argument('-l', '--label', action='store',
-                                     type=str, dest='label',
-                                     default='thermometer',
-                                     help='Shape Label?')
+    def add_arguments(self, pars):
+        pars.add_argument('--tab')
+        pars.add_argument('--width',   type=int,   default=25,    dest='width'  )
+        pars.add_argument('--offset1', type=int,   default=0,     dest='offset1')
+        pars.add_argument('--offset2', type=int,   default=100,   dest='offset2')
+        pars.add_argument('--back',    type=bool,  default=False, dest='back'   )
+
     def checkGradient(self, gid):
         try:
             retval = self.document.xpath('//svg:linearGradient[@id="%s"]' % gid, namespaces=inkex.NSS)[0]
@@ -108,9 +105,9 @@ class BubbleBond(inkex.Effect):
     def effect(self):
 
         #inkex.utils.debug("yo")
-
-        h = 10
-        offset = [0.0,1.0]
+        width  = 1e-2*self.options.width
+        offset = [1e-2*self.options.offset1,1e-2*self.options.offset2]
+        back   = self.options.back
 
         # check the number of selected objects
         idx = self.options.ids
@@ -127,6 +124,7 @@ class BubbleBond(inkex.Effect):
         if r0 is None or r1 is None:
             inkex.utils.debug('Select two circles!')
             return
+        h = width * 2.0*min(r0, r1)
 
         x0 = float(c0.attrib['cx'])
         y0 = float(c0.attrib['cy'])

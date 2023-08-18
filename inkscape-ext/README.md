@@ -15,6 +15,10 @@ Install the main `bubbles` package and put/link
 in `~/.config/inkscape/extensions/`
 (or the directory listed at `Edit > Preferences > System: User extensions`).
 
+It should be possible to avoid installing the main package by copying the main
+`bubbles/bubbles.py` file into this directory (the one linked/copied in inkscape's
+extensions directory)
+
 ## Usage
 
 Select two bubbles you want to bond 

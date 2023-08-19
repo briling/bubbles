@@ -7,12 +7,11 @@ class Bubble_World:
                  grad_offset=30.0,
                  font_family='Latin Modern Sans', font_weight='normal'):
         self.pars = locals(); self.pars.pop('self')
-        self.bubble = {}
-        self._bubbles  = []
+        self.bubble = {}  # bubble definitions
+        self._bubbles  = []  # bubble placements (id, x, y)
         self._liaisons = []
         self._texts    = []
-        self._colors   = []
-        self._colorsid = []
+        self._colors   = []  # color definition
 
     def def_bubble(self, key, fill=0xFFFFFF, r=50, stroke=0x990000, stroke_w=10):
 
@@ -27,26 +26,28 @@ class Bubble_World:
                             'stroke_w' : stroke_w,
                             }
 
-    def print_head(self, xcanv, ycanv):
+    def _format_head(self,xcanv, ycanv):
         print('<svg xmlns="http://www.w3.org/2000/svg" '
               'xmlns:xlink="http://www.w3.org/1999/xlink" '
               f'width="{xcanv}" height="{ycanv}">')
 
-    def print_tail(self):
+    def _format_tail(self):
         print('</svg>')
 
-    def print_def(self, dump=False, grad_offset=30.0, font_family='Latin Modern Sans', font_weight='normal'):
-        print('  <defs>')
-        self.print_def_bubble(dump=dump)
-        print()
-        self.print_def_gradient(dump=dump, offset=grad_offset)
-        print()
-        self.print_def_font(family=font_family, weight=font_weight)
-        print('  </defs>')
-        print()
+    
+    def _format_defs(self, dump=False, grad_offset=30.0, font_family='Latin Modern Sans', font_weight='normal'):
+        ret  = '  <defs>\n'
+        ret += self._format_def_bubbles(dump=dump)
+        ret += '\n'
+        ret += self._format_def_gradients(dump=dump, offset=grad_offset)
+        ret += '\n'
+        ret += self._format_def_fonts(family=font_family, weight=font_weight)
+        ret += '  </defs>\n\n'
+        return ret
 
-    def print_def_bubble(self, dump=False):
+    def _format_def_bubbles(self, dump=False):
 
+        ret = ""
         if dump is True:
             idx = set([a[0][0] for a,k in self._bubbles])
         else:
@@ -56,11 +57,14 @@ class Bubble_World:
             bub = self.bubble[i]
             cf = self._colors[bub['fill']]
             cs = self._colors[bub['stroke']]
-            print(f"    <circle id='bubble{str(i)}' cx='0' cy='0' r='{bub['r']}' "
-                  f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/>")
+            ret += f"    <circle id='bubble{str(i)}' cx='0' cy='0' r='{bub['r']}' "
+            ret += f"fill='#{cf:06x}' stroke='#{cs:06x}' stroke-width='{bub['stroke_w']}'/>\n"
 
-    def print_def_gradient(self, offset=30.0, dump=False):
+        return ret
 
+    def _format_def_gradients(self, offset=30.0, dump=False):
+
+        ret = ""
         if dump is True:
             idx = [(self.bubble[a[0][0]]['stroke'], self.bubble[a[1][0]]['stroke']) for [a,k] in self._liaisons]
         else:
@@ -69,15 +73,17 @@ class Bubble_World:
         for i,j in set(idx):
             coli = self._colors[i]
             colj = self._colors[j]
-            print(f'    <linearGradient id="myGradient{i}.{j}" x1="0" x2="0" y1="0" y2="1">'
-                  f'<stop offset="{offset}%"     stop-color="#{coli:06x}"/> '
-                  f'<stop offset="{100-offset}%" stop-color="#{colj:06x}"/> '
-                  f'</linearGradient>')
+            ret += f'    <linearGradient id="myGradient{i}.{j}" x1="0" x2="0" y1="0" y2="1">'
+            ret += f'<stop offset="{offset}%"     stop-color="#{coli:06x}"/> '
+            ret += f'<stop offset="{100-offset}%" stop-color="#{colj:06x}"/> '
+            ret += f'</linearGradient>\n'
+            
+        return ret
 
-    def print_def_font(self, family='Latin Modern Sans', weight='normal'):
+    def _format_def_font(self, family='Latin Modern Sans', weight='normal'):
         # font examples: 'Latin Modern Sans', 'Adobe Helvetica', 'monospace'
-        print(f'''    <style>
-        .mytext {'{'}
+        return f'''    <style>
+        .mytext {{
           font-style:normal; font-variant:normal; font-weight:{weight}; font-stretch:normal;
           line-height:125%;
           font-family:"{family}"; -inkscape-font-specification:"{family}";
@@ -86,12 +92,12 @@ class Bubble_World:
           fill-opacity:1; stroke:#FFFFFF;
           stroke-width:0; stroke-linecap:butt; stroke-linejoin:miter; stroke-opacity:1;
           stroke-miterlimit:4; stroke-dasharray:none
-        {'}'}
-    </style>''')
+        }}
+    </style>'''
 
-    def put_bubble(self, a):
+    def _format_bubble(self, a):
         t, x, y = a
-        print(f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />')
+        return f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />\n'
 
     def liaison_path(self, r0, r1, x0, y0, y11, alpha, h, auto, tol):
         if h is None:
@@ -111,7 +117,7 @@ class Bubble_World:
         y11 = y0 + math.hypot(x0-x1, y0-y1)
         return angle, y11
 
-    def put_liaison(self, a0, a1, h=None, auto=True, alpha=None, tol=1e-4):
+    def _format_liaison(self, a0, a1, h=None, auto=True, alpha=None, tol=1e-4):
         t0, x0, y0 = a0
         t1, x1, y1 = a1
         r0 = self.bubble[t0]['r']+self.bubble[t0]['stroke_w']/2
@@ -123,9 +129,9 @@ class Bubble_World:
         angle, y11 = self.liaison_angle(x0, x1, y0, y1)
         path = self.liaison_path(r0, r1, x0, y0, y11, alpha, h, auto, tol)
 
-        print(f'  <g transform="rotate({-angle},{x0},{y0})"> <path d=" '+\
-              path+\
-              f'" fill="url(\'#myGradient{col0}.{col1}\')" /> </g>')
+        return f'  <g transform="rotate({-angle},{x0},{y0})"> <path d=" '+\
+               path+\
+               f'" fill="url(\'#myGradient{col0}.{col1}\')" /> </g>\n'
 
     def put_liaison_equal(self, r0, x, y0, y1, h):
 
@@ -212,7 +218,7 @@ class Bubble_World:
 
         return R, Cx+X12*cosb, Cy+X12*sinb, (X21-X12)*cosb, (X21-X12)*sinb, -2*X21*cosb
 
-    def put_text(self, x,y, text, fs=12, fc=0x000000):
+    def _format_text(self, x,y, text, fs=12, fc=0x000000):
         print(f'  <text x="{x}" y="{y}" class="mytext" font-size="{fs}px" fill="#{fc:06x}">')
         l = (len(text)-1.5)/2
         for i,line in enumerate(text):
@@ -228,28 +234,35 @@ class Bubble_World:
     def add_text(self, *args, **kwargs):
         self._texts.append((args, kwargs))
 
-    def put_all_liaisons(self):
+    def _format_all_liaisons(self):
+        ret = ''
         for [a,k] in self._liaisons:
-            self.put_liaison(*a, **k)
+            ret += self._format_liaison(*a, **k)
+        return ret
 
-    def put_all_bubbles(self):
+    def _format_all_bubbles(self):
+        ret = ''
         for [a,k] in self._bubbles:
-            self.put_bubble(*a, **k)
+            ret += self._format_bubble(*a, **k)
+        return ret
 
-    def put_all_texts(self):
+    def _format_all_texts(self):
+        ret = ''
         for [a,k] in self._texts:
-            self.put_text(*a, **k)
+            ret += self._format_text(*a, **k)
+        return ret
 
     def dump(self):
-        self.print_head(*self.get_canvsize())
-        self.print_def(dump=True, grad_offset=self.pars['grad_offset'], font_family=self.pars['font_family'], font_weight=self.pars['font_weight'])
-        self.put_all_liaisons()
-        print()
-        self.put_all_bubbles()
-        print()
-        self.put_all_texts()
-        print()
-        self.print_tail()
+        ret  = self._format_head(*self.get_canvsize())
+        ret += self._format_defs(dump=True, grad_offset=self.pars['grad_offset'], font_family=self.pars['font_family'], font_weight=self.pars['font_weight'])
+        ret += self._format_all_liaisons()
+        ret += '\n'
+        ret += self._format_all_bubbles()
+        ret += '\n'
+        ret += self._format_all_texts()
+        ret += '\n'
+        ret += self._format_tail()
+        return ret
 
     def get_canvsize(self):
         xcanv = self.pars['xcanv']
@@ -270,6 +283,7 @@ class Bubble_World:
 
 
 def _gold(f, eps, bra, ket):
+    """Golden ratio optimisation: find a local minimum for f between bra and key, with tolerence eps"""
     phi = (math.sqrt(5.0)-1.0)*0.5
     d   = ket-bra
     x1  = ket-d*phi
@@ -283,15 +297,16 @@ def _gold(f, eps, bra, ket):
         if y1 > y2:
             bra = x1
             x1  = x2
-            x2  = bra+(ket-bra)*phi
+            d = ket-bra
+            x2  = bra+d*phi
             y1  = y2
             y2  = f(x2)
         else:
             ket = x2
             x2  = x1
-            x1  = ket-(ket-bra)*phi
+            d = ket-bra
+            x1  = ket-d*phi
             y2  = y1
-            y1  = f(x1)
-        d = ket-bra
+            y1  = f(x1)      
     return c
 

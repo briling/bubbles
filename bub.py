@@ -91,5 +91,5 @@ bubble_world.add_text(x11,y1,  ['density', 'of neighbors'], fs=22, fc=0x000000)
 bubble_world.add_text(x11,y11, ['electronic', 'structure'], fs=22, fc=0x000000)
 bubble_world.add_text(x3, y3,  ['SPAHM'], fs=25, fc=0x000000)
 
-bubble_world.dump()
+print(bubble_world.dump())
 

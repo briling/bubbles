@@ -13,19 +13,6 @@ class Bubble_World:
         self._texts    = []
         self._colors   = []  # color definition
 
-    def def_bubble(self, key, fill=0xFFFFFF, r=50, stroke=0x990000, stroke_w=10):
-
-        def findcolor(c):
-            if c not in self._colors:
-                self._colors.append(c)
-            return self._colors.index(c)
-
-        self.bubble[key] = {'fill'     : findcolor(fill),
-                            'r'        : r,
-                            'stroke'   : findcolor(stroke),
-                            'stroke_w' : stroke_w,
-                            }
-
     def _format_head(self,xcanv, ycanv):
         print('<svg xmlns="http://www.w3.org/2000/svg" '
               'xmlns:xlink="http://www.w3.org/1999/xlink" '
@@ -99,24 +86,6 @@ class Bubble_World:
         t, x, y = a
         return f'  <use x="{x}" y="{y}" xlink:href="#bubble{str(t)}" />\n'
 
-    def liaison_path(self, r0, r1, x0, y0, y11, alpha, h, auto, tol):
-        if h is None:
-            h = 0.666*r1
-        if abs(r0-r1) > 1e-4:
-            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto, tol=tol)
-        else:
-            R, dx0, dy0, dx1, dy1, dx2 = self.put_liaison_equal(r0, x0, y0, y11, h)
-        return f'M {dx0} {dy0} '\
-               f'a {R}, {R}  0 0 0 {dx1} {+dy1} '\
-               f'h {dx2} '\
-               f'a {R}, {R}  0 0 0 {dx1} {-dy1} '\
-               f'z'
-
-    def liaison_angle(self, x0, x1, y0, y1):
-        angle = math.degrees(math.pi*0.5 - math.atan2(y1-y0, x1-x0))
-        y11 = y0 + math.hypot(x0-x1, y0-y1)
-        return angle, y11
-
     def _format_liaison(self, a0, a1, h=None, auto=True, alpha=None, tol=1e-4):
         t0, x0, y0 = a0
         t1, x1, y1 = a1
@@ -133,7 +102,108 @@ class Bubble_World:
                path+\
                f'" fill="url(\'#myGradient{col0}.{col1}\')" /> </g>\n'
 
-    def put_liaison_equal(self, r0, x, y0, y1, h):
+    def _format_text(self, x,y, text, fs=12, fc=0x000000):
+        print(f'  <text x="{x}" y="{y}" class="mytext" font-size="{fs}px" fill="#{fc:06x}">')
+        l = (len(text)-1.5)/2
+        for i,line in enumerate(text):
+            print(f'    <tspan x="{x}" dy="{-l if i==0 else 1}em"> {line} </tspan>')
+        print('  </text>')
+    
+    def _format_all_liaisons(self):
+        ret = ''
+        for [a,k] in self._liaisons:
+            ret += self._format_liaison(*a, **k)
+        return ret
+
+    def _format_all_bubbles(self):
+        ret = ''
+        for [a,k] in self._bubbles:
+            ret += self._format_bubble(*a, **k)
+        return ret
+
+    def _format_all_texts(self):
+        ret = ''
+        for [a,k] in self._texts:
+            ret += self._format_text(*a, **k)
+        return ret
+
+    def def_bubble(self, key, fill=0xFFFFFF, r=50, stroke=0x990000, stroke_w=10):
+
+        def findcolor(c):
+            if c not in self._colors:
+                self._colors.append(c)
+            return self._colors.index(c)
+
+        self.bubble[key] = {'fill'     : findcolor(fill),
+                            'r'        : r,
+                            'stroke'   : findcolor(stroke),
+                            'stroke_w' : stroke_w,
+                            }
+
+    def add_liaison(self, *args, **kwargs):
+        self._liaisons.append((args, kwargs))
+
+    def add_bubble(self, *args, **kwargs):
+        self._bubbles.append((args, kwargs))
+
+    def add_text(self, *args, **kwargs):
+        self._texts.append((args, kwargs))
+
+
+    def dump(self):
+        ret  = self._format_head(*self.get_canvsize())
+        ret += self._format_defs(dump=True, grad_offset=self.pars['grad_offset'], font_family=self.pars['font_family'], font_weight=self.pars['font_weight'])
+        ret += self._format_all_liaisons()
+        ret += '\n'
+        ret += self._format_all_bubbles()
+        ret += '\n'
+        ret += self._format_all_texts()
+        ret += '\n'
+        ret += self._format_tail()
+        return ret
+
+    def get_canvsize(self):
+        xcanv = self.pars['xcanv']
+        ycanv = self.pars['ycanv']
+        if xcanv is None or ycanv is None:
+            xmax = ymax = 0
+            rmean = 0
+            for [a,k] in self._bubbles:
+                t,x,y = a[0]
+                r = self.bubble[t]['r']+self.bubble[t]['stroke_w']/2
+                xmax = max(xmax, x+r)
+                ymax = max(ymax, y+r)
+                rmean += r
+            rmean /= len(self._bubbles)
+            if xcanv is None: xcanv = xmax+rmean/2
+            if ycanv is None: ycanv = ymax+rmean/2
+        return xcanv, ycanv
+
+
+class BondSolver:
+    
+    @staticmethod
+    def liaison_path(r0, r1, x0, y0, y11, alpha, h, auto, tol):
+        if h is None:
+            h = 0.666*r1
+        if abs(r0-r1) > 1e-4:
+            R, dx0, dy0, dx1, dy1, dx2 = BondSolver._compute_circles_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto, tol=tol)
+        else:
+            R, dx0, dy0, dx1, dy1, dx2 = BondSolver._compute_circles_equal(r0, x0, y0, y11, h)
+        return f'M {dx0} {dy0} '\
+               f'a {R}, {R}  0 0 0 {dx1} {+dy1} '\
+               f'h {dx2} '\
+               f'a {R}, {R}  0 0 0 {dx1} {-dy1} '\
+               f'z'
+
+    @staticmethod
+    def liaison_angle(x0, x1, y0, y1):
+        angle = math.degrees(math.pi*0.5 - math.atan2(y1-y0, x1-x0))
+        y11 = y0 + math.hypot(x0-x1, y0-y1)
+        return angle, y11
+
+    @staticmethod
+    def _compute_circles_equal(r0, x, y0, y1, h):
 
         '''
         There are 2 circles C0, C1 with radius r0 centered at the points (x,y0) and (x,y1).
@@ -156,7 +226,8 @@ class Bubble_World:
         yy = dy*r0 / dr
         return R, x+xx, y0+yy, 0,  2.0*(dy-yy), -2.0*xx
 
-    def put_liaison_diffr(self, r0, r1, x, y0, y1, alpha, h, auto=True, tol=1e-4):
+    @staticmethod
+    def _compute_circles_diffr(r0, r1, x, y0, y1, alpha, h, auto=True, tol=1e-4):
 
         '''
         There are 2 circles C0, C1 with radii r0!=r1 centered at the points (x,y0) and (x,y1).
@@ -217,69 +288,6 @@ class Bubble_World:
         sinb, cosb, X12, X21, R, hh = get_coord(alpha)
 
         return R, Cx+X12*cosb, Cy+X12*sinb, (X21-X12)*cosb, (X21-X12)*sinb, -2*X21*cosb
-
-    def _format_text(self, x,y, text, fs=12, fc=0x000000):
-        print(f'  <text x="{x}" y="{y}" class="mytext" font-size="{fs}px" fill="#{fc:06x}">')
-        l = (len(text)-1.5)/2
-        for i,line in enumerate(text):
-            print(f'    <tspan x="{x}" dy="{-l if i==0 else 1}em"> {line} </tspan>')
-        print('  </text>')
-
-    def add_liaison(self, *args, **kwargs):
-        self._liaisons.append((args, kwargs))
-
-    def add_bubble(self, *args, **kwargs):
-        self._bubbles.append((args, kwargs))
-
-    def add_text(self, *args, **kwargs):
-        self._texts.append((args, kwargs))
-
-    def _format_all_liaisons(self):
-        ret = ''
-        for [a,k] in self._liaisons:
-            ret += self._format_liaison(*a, **k)
-        return ret
-
-    def _format_all_bubbles(self):
-        ret = ''
-        for [a,k] in self._bubbles:
-            ret += self._format_bubble(*a, **k)
-        return ret
-
-    def _format_all_texts(self):
-        ret = ''
-        for [a,k] in self._texts:
-            ret += self._format_text(*a, **k)
-        return ret
-
-    def dump(self):
-        ret  = self._format_head(*self.get_canvsize())
-        ret += self._format_defs(dump=True, grad_offset=self.pars['grad_offset'], font_family=self.pars['font_family'], font_weight=self.pars['font_weight'])
-        ret += self._format_all_liaisons()
-        ret += '\n'
-        ret += self._format_all_bubbles()
-        ret += '\n'
-        ret += self._format_all_texts()
-        ret += '\n'
-        ret += self._format_tail()
-        return ret
-
-    def get_canvsize(self):
-        xcanv = self.pars['xcanv']
-        ycanv = self.pars['ycanv']
-        if xcanv is None or ycanv is None:
-            xmax = ymax = 0
-            rmean = 0
-            for [a,k] in self._bubbles:
-                t,x,y = a[0]
-                r = self.bubble[t]['r']+self.bubble[t]['stroke_w']/2
-                xmax = max(xmax, x+r)
-                ymax = max(ymax, y+r)
-                rmean += r
-            rmean /= len(self._bubbles)
-            if xcanv is None: xcanv = xmax+rmean/2
-            if ycanv is None: ycanv = ymax+rmean/2
-        return xcanv, ycanv
 
 
 def _gold(f, eps, bra, ket):

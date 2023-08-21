@@ -4,9 +4,12 @@ This is an [`inkscape`](https://inkscape.org/) extension
 that uses the [`bubbles`](../) library
 to draw bonds between bubbles.
 
-## Requirements (under construction)
+## Requirements
 
-Should work with `python3` and `inkscape>=1` (I have `python3.6` and `inkscape 1.0.1`).
+Works with `python3` and `inkscape 1.0.x`
+> [!WARNING]
+> Does not work with inkscape 1.2.x but we're working on it
+
 
 ## Installation
 

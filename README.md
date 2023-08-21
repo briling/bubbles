@@ -20,9 +20,14 @@ There is also an [inkscape extension](inkscape-ext/)!
 
 
 ## Installation
-```
+
+Python installation:
+```bash
 pip install git+https://github.com/briling/bubbles.git
 ```
+
+Inkscape installation:
+see [inkscape extension readme](inkscape-ext/README.md)
 
 ## TODO
 * Good README

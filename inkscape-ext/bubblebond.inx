@@ -5,10 +5,10 @@
 
   <param name="tab" type="notebook">
     <page name="options" gui-text="Options">
-      <param name="width"   type="int"   gui-text="width (% of the smallest circle)" min="-99" max="99">  25   </param>
-      <param name="offset1" type="int"   gui-text="gradient offset 1, %"             min="0"   max="100"> 0    </param>
-      <param name="offset2" type="int"   gui-text="gradient offset 2, %"             min="0"   max="100"> 100  </param>
-      <param name="back"    type="bool"  gui-text="Put the bond behind the circles">                      false</param>
+      <param name="width"   type="int"   gui-text="width (% of the smallest circle)" min="-99" max="99" >25</param>
+      <param name="offset1" type="int"   gui-text="gradient offset 1, %"             min="0"   max="100">0</param>
+      <param name="offset2" type="int"   gui-text="gradient offset 2, %"             min="0"   max="100">100</param>
+      <param name="back"    type="bool"  gui-text="Put the bond behind the circles"                     >false</param>
 
     </page>
     <page name="help" gui-text="Help">
@@ -22,6 +22,6 @@
     <object-type>all</object-type>
   </effect>
   <script>
-    <command reldir="extensions" interpreter="python">bubblebond.py</command>
+    <command location="inx" interpreter="python">bubblebond.py</command>
   </script>
 </inkscape-extension>

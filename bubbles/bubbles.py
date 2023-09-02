@@ -7,12 +7,11 @@ class Bubble_World:
                  grad_offset=30.0,
                  font_family='Latin Modern Sans', font_weight='normal'):
         self.pars = locals(); self.pars.pop('self')
-        self.bubble = {}
-        self._bubbles  = []
+        self.bubble = {}  # bubble definitions
+        self._bubbles  = []  # bubble placements (id, x, y)
         self._liaisons = []
         self._texts    = []
-        self._colors   = []
-        self._colorsid = []
+        self._colors   = []  # color definition
 
     def def_bubble(self, key, fill=0xFFFFFF, r=50, stroke=0x990000, stroke_w=10):
 
@@ -140,12 +139,17 @@ class Bubble_World:
         '''
 
         l = abs(y1-y0)
+        assert 0.5*h <= r0 , f"bad h parameter, should be less or equal to {2*r0}"
+        if 0.5*l < r0:
+            assert 0.25*(l**2+h**2) >= r0**2, f"bad h parameter, should be greater or equal to {2*math.sqrt(r0**2-l**2/4)}"
+        
         R = (0.25*l**2 + 0.25*h**2 - r0**2) / (2.0*r0 - h)
 
         dx = 0.5*h + R
         dy = 0.5*l
         dr = math.hypot(dx, dy)
 
+        # position of a tangent point wrt C0's center
         xx = dx*r0 / dr
         yy = dy*r0 / dr
         return R, x+xx, y0+yy, 0,  2.0*(dy-yy), -2.0*xx
@@ -270,6 +274,7 @@ class Bubble_World:
 
 
 def _gold(f, eps, bra, ket):
+    """Golden ratio optimisation: find a local minimum for f between bra and key, with tolerence eps"""
     phi = (math.sqrt(5.0)-1.0)*0.5
     d   = ket-bra
     x1  = ket-d*phi

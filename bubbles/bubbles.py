@@ -187,13 +187,17 @@ class BondSolver:
         if h is None:
             h = 0.666*r1
         if abs(r0-r1) > 1e-4:
-            R, dx0, dy0, dx1, dy1, dx2 = BondSolver._compute_circles_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto, tol=tol)
+            curv1,curv2, (x1,y1), dx0, dx1 = BondSolver._compute_circles_diffr(r0, r1, x0, y0, y11, alpha=alpha, h=h, auto=auto, tol=tol)
         else:
-            R, dx0, dy0, dx1, dy1, dx2 = BondSolver._compute_circles_equal(r0, x0, y0, y11, h)
-        return f'M {dx0} {dy0} '\
-               f'a {R}, {R}  0 0 0 {dx1} {+dy1} '\
-               f'h {dx2} '\
-               f'a {R}, {R}  0 0 0 {dx1} {-dy1} '\
+            #curv1,curv2, (x1,y1), dx0, dx1 = BondSolver._compute_circles_equal(r0, x0, y0, y11, h)
+            curv1,curv2, (x1,y1), dx0, dx1 = BondSolver._compute_bezier(r0, r1, x0, y0, y11, h, theta0=math.pi/6, theta1=math.pi/6, tol=tol)
+
+        # move to C1, C1 -> C0 path, cross-C0 path, C0 -> C1 path, cross-C1 path, close.
+        return f'M {x1} {y1} '\
+               f'{curv1} '\
+               f'a {r0*1.01}, {r0*1.01} 0 0 0 {-dx0} 0'\
+               f'{curv2} '\
+               f'a {r1*1.01}, {r1*1.01} 0 0 0 {+dx1} 0'\
                f'z'
 
     @staticmethod
@@ -216,16 +220,87 @@ class BondSolver:
         '''
 
         l = abs(y1-y0)
+        assert 0.5*h <= r0 , f"bad h parameter, should be less or equal to {2*r0}"
+        if 0.5*l < r0:
+            assert 0.25*(l**2+h**2) >= r0**2, f"bad h parameter, should be greater or equal to {2*math.sqrt(r0**2-l**2/4)}"
+        
         R = (0.25*l**2 + 0.25*h**2 - r0**2) / (2.0*r0 - h)
 
         dx = 0.5*h + R
         dy = 0.5*l
         dr = math.hypot(dx, dy)
 
+        # position of a tangent point wrt C0's center
         xx = dx*r0 / dr
         yy = dy*r0 / dr
-        return R, x+xx, y0+yy, 0,  2.0*(dy-yy), -2.0*xx
 
+        # R, R, rotation, flag,flag, travel_x, travel_y
+        curv1 = f'a {R}, {R}  0 0 0 0 {+2.0*(dy-yy)} '
+        curv2 = f'a {R}, {R}  0 0 0 0 {-2.0*(dy-yy)} '
+        return curv1,curv2 (x+xx, y0+yy), 2*xx, +2*xx
+        
+
+    @staticmethod
+    def _compute_ellipses_equal(r0, x, y0, y1, h):
+
+        '''
+        There are 2 circles C0, C1 with radius r0 centered at the points (x,y0) and (x,y1).
+        We search for two ellipses E2, E2' of the same radii, tangent to C0 and C1
+        so that the shortest distance between E2 and E2' = h.
+        R1 is the 'horizontal radius' of E2 and E2',
+        R2 is their 'vertical radius', and a*R1 is the radius at the tangent points.
+        other values are also needed to link the tangent points in the svg arc shape.
+        '''
+
+        l = abs(y1-y0)
+        assert 0.5*h <= r0 , f"bad h parameter, should be less or equal to {2*r0}"
+        assert abs(a)>=1, "bad a elongation parameter: should be bigger than 1 in amplitude"
+        if 0.5*l < r0:
+            assert 0.25*(l**2+h**2) >= r0**2, f"bad h parameter, should be greater or equal to {2*math.sqrt(r0**2-l**2/4)}"
+        
+        # from the Pythagorean theorem, we get:
+        # (a**2 -1) * R1**2 + (2*r0*a -h)*R1 + (r0**2 - h**2/4 - l**2/4) = 0
+        # which gives a determinant of
+        R1det = (h**2 + l**2)*a**2 - 4*h*r0*a - l**2 + 4*r0**2 
+        # which is a polynomial of a, that we want positive
+        if R1det<0:
+            part1 = 2*h*r0/(h**2 + l**2)
+            part2 = l*math.sqrt(h**2 + l**2 - 4*r0**2)/(h**2 + l**2)
+            raise AssertionError(f"bad a elongation parameter: should be between {max(1,part1-part2)} and {part1+part2}.")
+        # there are often two roots to the main polynomial, but often only one positive one
+        # since the roots are (-b±sqrt(det))/2a, we compare the amplitudes of b**2 and det
+        # which, since h**2+l**2 >= 4*r0**2,
+        # det_bigger = abs(a) >= 1
+        # which also means that there is no solution for abs(a)<1, which is why we checked that at the start
+        denom = 2*(a**2 -1)
+        part1 = (2*a*r0 - h)/denom
+        part2 = math.sqrt(R1det)/denom
+        if denom <0:
+            R1 = part1 - part2
+        else:
+            R1 = part1 + part2
+
+        dx = 0.5*h + R1
+        dy = 0.5*l
+        dr = math.hypot(dx, dy)
+        
+        # and now we fetch R2=R1*a0, given that the ellipse is given by (y/a0**2 +x**2 = R1**2
+        # =>  1/a**2 = (sin(theta)/(a0))**2 +cos(theta)**2
+        #theta = math.arctan(dy/dx)
+        tan_theta = dy/dx
+        sin_theta = tan_theta/math.sqrt(tan_theta**2 +1)
+        a0 = 1/math.sqrt(1/(a*sin_theta)**2 - 1/tan_theta**2)
+
+        # position of a tangent point wrt C0's center
+        xx = dx*r0 / dr
+        yy = dy*r0 / dr
+
+        # R, R, rotation, flag,flag, travel_x, travel_y
+        curv1 = f'a {R1}, {R1*a0}  0 0 0 0 {+2.0*(dy-yy)}'
+        curv2 = f'a {R1}, {R1*a0}  0 0 0 0 {-2.0*(dy-yy)}'
+        return curv1,curv2, (x+xx, y0+yy), 2*xx, +2*xx
+    
+    
     @staticmethod
     def _compute_circles_diffr(r0, r1, x, y0, y1, alpha, h, auto=True, tol=1e-4):
 
@@ -287,8 +362,91 @@ class BondSolver:
 
         sinb, cosb, X12, X21, R, hh = get_coord(alpha)
 
-        return R, Cx+X12*cosb, Cy+X12*sinb, (X21-X12)*cosb, (X21-X12)*sinb, -2*X21*cosb
+        # R, R, rotation, flag,flag, travel_x, travel_y
+        curv1 = f'a {R}, {R}  0 0 0 {(X21-X12)*cosb} {+(X21-X12)*sinb}'
+        curv2 = f'a {R}, {R}  0 0 0 {(X21-X12)*cosb} {-(X21-X12)*sinb}'
+        return curv1,curv2, (Cx+X12*cosb, Cy+X12*sinb), 2*X21*cosb, 2*X12*cosb
+        
+        # curv1 = f'a {R}, {R}  0 0 0 {(X12-X21)*cosb} {+(X12-X21)*sinb}'
+        # curv2 = f'a {R}, {R}  0 0 0 {(X12-X21)*cosb} {-(X12-X21)*sinb}'
+        # return curv1,curv2, (Cx-X21*cosb, Cy-X21*sinb), +2*X21*cosb, -2*X12*cosb
 
+
+    @staticmethod
+    def _compute_bezier(r0, r1, x, y0, y1, h, theta0, theta1, tol=1E-4):
+        '''
+        There are 2 circles C0, C1 with radius r0 centered at the points (x,y0) and (x,y1).
+        we search for two (well, four) cubic polynomials x=f(y) that start tangent to C0 at theta0
+        away from the C0-C1 line, then goes to be parallel to the C0-C1 line, at distance h/2 from it.
+        From there, switch to the second polynomial and end up tangent to C1 at theta1 away from the C0-C1 line.
+        At the point where these polynomials join, both first and second derivative must be the same.
+        '''
+
+        assert 0<=theta0<=math.pi/2, 'bad theta0: must be in [0;pi/2]'
+        assert 0<=theta1<=math.pi/2, 'bad theta1: must be in [0;pi/2]'
+        l = abs(y1-y0)
+        # points and derivatives at the circles
+        xx0 = r0*math.sin(theta0)
+        yy0 = r0*math.cos(theta0)
+        dd0 = -yy0/xx0  # dd0b = dd0*(yy2-yy0)
+        xx1 = r1*math.sin(theta1)
+        yy1 = r1*math.cos(theta1)
+        dd1 = yy1/xx1  # dd1b = dd1*(yy2-yy1)
+        xx2 = h/2
+        assert xx2 <= min(xx0,xx1), 'h parameter too big: must be smaller than the diameter of the smallest circle'
+        # check that the tangents do cross "below" the x=h/2 line
+        assert xx1/dd1 + xx0/dd0 <= (yy1-yy0),  'theta parameters too high: tangents cross too high'
+
+        # cubic interpolations: 
+        # t0 = (y-yy0)/(yy2-yy0); t1=(y-yy1)/(yy2-yy1)
+        # x[0] = (2*xx0 -2*xx2 +dd0b)*t0**3 + (-3*xx0 +3*xx2 -2*dd0b)*t0**2 + dd0b*t0 + xx0
+        # x[1] = (2*xx1 -2*xx2 +dd1b)*t1**3 + (-3*xx1 +3*xx2 -2*dd1b)*t1**2 + dd1b*t1 + xx1
+        # dx[0]/dt0 = (6*xx0 -6*xx2 +6*dd0b)*t0**2 + (-6*xx0 +6*xx2 -4*dd0b)*t0 + dd0b
+        # d2x[0]/dt02 = (12*xx0 -12*xx2 +12*dd0b)*t0 + (-6*xx0 +6*xx2 -4*dd0b)
+        # d2x[0]/dy2 = ( (12*xx0 -12*xx2 +12*dd0b)*t0 + (-6*xx0 +6*xx2 -4*dd0b) )/(yy2-yy0)**2
+        # we also want the second derivative to be positive for all the segment:
+        # dd0*(yy2-yy0) +1.5*(xx0-xx2) >= 0   =>  yy2 >= 1.5*(xx2-xx0)/dd0 + yy0
+        
+        
+        # d2x[0]/dy2(t0=1) =  (6*xx0 -6*xx2 +8*dd0*(yy2-yy0))/(yy2-yy0)**2
+        ### d2x[0]/dy2(t0=1) is strictly monotonous with yy2, if yy2>yy0
+        ### same thing with d2x[0]/dy2(t0=1) when yy2<yy1:
+        # we can numerically find the yy2 where they are equal
+        if abs(r0/r1) <1E-4:
+            yy2 = 0.5*(yy1+yy0)
+        else:
+            def f(yy2):
+                return (
+                    +(6*xx0 -6*xx2 +8*dd0*(yy2-yy0))/(yy2-yy0)**2
+                    -(6*xx1 -6*xx2 +8*dd1*(yy2-yy1))/(yy2-yy1)**2
+                )
+            yy2 = _bisect_root(f, tol,yy0+1E-5,yy1-1E-5)
+
+        # now, convert the cubic splines to Besier splines:
+        # we just need to have the control points be at 1/3 and 2/3 of the y axis of each segment
+        # first segment: ctrl0 relative to pt0
+        # second segment: ctrl1 relative to pt2
+        
+        dyy2 = yy2-yy0
+        dxx2 = xx2-xx0
+        sublen0 = dyy2/3
+        dyy1 = yy1-yy2
+        dxx1 = xx1-xx2
+        sublen1 = dyy1/3
+        
+        ctrl0a = sublen0, sublen0*dd0
+        ctrl0b = 2*sublen0, dxx2
+        # ctrl1 relative to pt2
+        ctrl1a = sublen1, 0
+        ctrl1b = 2*sublen1, dxx1+sublen1*dd1
+
+        curv1 = f'c {ctrl0a[1]} {ctrl0a[0]}, {ctrl0b[1]} {ctrl0b[0]}, {dxx2} {dyy2} '\
+                f'c {ctrl1a[1]} {ctrl1a[0]}, {ctrl1b[1]} {ctrl1b[0]}, {dxx1} {dyy1}'
+        # and now the curve on the other side
+        curv2 = f'c {ctrl1b[1]-dxx1} {ctrl1b[0]-dyy1}, {ctrl1a[1]-dxx1} {ctrl1a[0]-dyy1}, {-dxx1} {-dyy1} '\
+                f'c {ctrl0b[1]-dxx2} {ctrl0b[0]-dyy2}, {ctrl0a[1]-dxx2} {ctrl0a[0]-dyy2}, {-dxx2} {-dyy2}' 
+        
+        return curv1,curv2, (x+xx0, y0+yy0), 2*xx0, 2*xx1
 
 def _gold(f, eps, bra, ket):
     """Golden ratio optimisation: find a local minimum for f between bra and key, with tolerence eps"""
@@ -318,3 +476,18 @@ def _gold(f, eps, bra, ket):
             y1  = f(x1)      
     return c
 
+def _bisect_root(f, eps, bra, ket):
+    if bra > ket:
+        (bra,ket) = (ket,bra)
+    a,b = f(bra),f(ket)
+    decreaser = a > b
+    assert a*b < 0
+    
+    while ket-bra > eps:
+        x = 0.5*(bra+ket)
+        y = f(x)
+        if (y>0) ^ decreaser:
+            ket = x
+        else:
+            bra = x
+    return x

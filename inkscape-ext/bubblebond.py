@@ -100,9 +100,8 @@ class BubbleBond(inkex.Effect):
                 return 'url(#'+gname+')'
 
     def make_liaison(self, r0, r1, x0, x1, y0, y1, h, gradient):
-        BW         = bubbles.Bubble_World()
-        angle, y11 = BW.liaison_angle(x0, x1, y0, y1)
-        path       = BW.liaison_path(r0, r1, x0, y0, y11, None, h, True, 1e-4)
+        angle, y11 = bubbles.BondSolver.liaison_angle(x0, x1, y0, y1)
+        path       = bubbles.BondSolver.liaison_path(r0, r1, x0, y0, y11, None, h, True, 1e-4)
         liaison       = inkex.elements.PathElement()
         liaison.path  = path
         liaison.style = str(inkex.styles.Style({'stroke': 'none', 'stroke-width': '0', 'fill': gradient}))

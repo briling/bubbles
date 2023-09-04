@@ -3,7 +3,16 @@
 from itertools import count
 import inkex
 from lxml import etree
-import bubbles
+
+try:
+    import bubbles
+except ImportError:
+    # try and detect the bubbles.py file next to this one
+    import sys, os
+    sys.path.append(os.path.split(__file__)[0])
+    import bubbles
+    del sys.path[-1]
+    del sys,os
 
 
 class BubbleBond(inkex.Effect):
@@ -36,7 +45,19 @@ class BubbleBond(inkex.Effect):
             raise inkex.AbortExtension("These are not circles.")
         h = width * 2.0*min(r0, r1)
 
-        colors = (st0['stroke'], st1['stroke'])
+        if 'stroke' in st0 and st0['stroke'] != 'none':
+            col0 = st0['stroke']
+        elif 'fill' in st0:
+            col0 = st0['fill']
+        else:
+            col0 = 'none'
+        if 'stroke' in st1 and st1['stroke'] != 'none':
+            col1 = st1['stroke']
+        elif 'fill' in st0:
+            col1 = st1['fill']
+        else:
+            col1 = 'none'
+        colors = (col0, col1)
         x0 = float(c0.attrib['cx'])
         y0 = float(c0.attrib['cy'])
         x1 = float(c1.attrib['cx'])
@@ -79,9 +100,8 @@ class BubbleBond(inkex.Effect):
                 return 'url(#'+gname+')'
 
     def make_liaison(self, r0, r1, x0, x1, y0, y1, h, gradient):
-        BW         = bubbles.Bubble_World()
-        angle, y11 = BW.liaison_angle(x0, x1, y0, y1)
-        path       = BW.liaison_path(r0, r1, x0, y0, y11, None, h, True, 1e-4)
+        angle, y11 = bubbles.BondSolver.liaison_angle(x0, x1, y0, y1)
+        path       = bubbles.BondSolver.liaison_path(r0, r1, x0, y0, y11, None, h, True, 1e-4)
         liaison       = inkex.elements.PathElement()
         liaison.path  = path
         liaison.style = str(inkex.styles.Style({'stroke': 'none', 'stroke-width': '0', 'fill': gradient}))
@@ -98,14 +118,19 @@ class BubbleBond(inkex.Effect):
             r0 = c0.radius[0]
         else:
             return None
-        return r0 + float(st0['stroke-width'])/2
+        if 'stroke' in st0 and st0['stroke'] != 'none':
+            return r0 + float(st0['stroke-width'])/2
+        else:
+            return r0
 
     def get_style_dict(self, c0):
         st0_str = c0.attrib['style']
         st0_obj = inkex.styles.Style.parse_str(st0_str)
-        st0_dict = {}
-        for key, val in st0_obj:
-            st0_dict[key] = val
+        if hasattr(st0_obj, 'items'):
+            st0_dict = { k:v for k,v in st0_obj.items() }
+        else:
+            # fallback that only works on old versions of inkscape (before which one?)
+            st0_dict = { k:v for k,v in st0_obj }
         return st0_dict
 
 
